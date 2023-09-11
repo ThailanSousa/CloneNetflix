@@ -8,9 +8,9 @@ public interface IAssinaturaRepositoiro {
 
     public boolean salvarAssinatura(Assinatura assinatura);
 
-    public ArrayList<Assinatura> listarAssinatura();
+    public ArrayList<Assinatura> listaAssinatura();
 
-    public boolean deletarAssinatura(String nomeAssinante);
+    public boolean deletarAssinatura(String nomeAssinatura);
 
     public boolean alterarAssinatura (Assinatura assinatura);
 
