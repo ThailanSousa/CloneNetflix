@@ -1,4 +1,3 @@
-import DAO.UsuarioDAO;
 import main.java.model.entities.Pessoa;
 
 public class app {
@@ -11,7 +10,7 @@ public class app {
         thailan.setEmail("Thailan@gmail.com");
         thailan.setSenha("123456");
 
-        new UsuarioDAO().cadastrarUsuario(thailan);
+        new Pessoa().cadastrarUsuario(thailan);
         
 
 
