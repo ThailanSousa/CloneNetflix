@@ -10,7 +10,7 @@ public class Pessoa {
         private String phone;
         private int adm;
 
-        
+        public Pessoa(){}
 
         public Pessoa(String name, int age, String cpf, String email,String senha, String phone, int adm) {
             this.name = name;
