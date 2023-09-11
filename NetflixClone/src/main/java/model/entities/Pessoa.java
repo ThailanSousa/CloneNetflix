@@ -6,12 +6,13 @@ public class Pessoa {
         private int age;
         private String cpf;
         private String email;
+        private String senha;
         private String phone;
-        private boolean adm;
+        private int adm;
 
         
 
-        public Pessoa(String name, int age, String cpf, String email, String phone, boolean adm) {
+        public Pessoa(String name, int age, String cpf, String email,String senha, String phone, int adm) {
             this.name = name;
             this.age = age;
             this.cpf = cpf;
@@ -52,6 +53,16 @@ public class Pessoa {
             this.email = email;
         }
 
+        public String getSenha(){
+            return senha;
+        }
+
+        public void setSenha(String senha){
+
+            this.senha = senha;
+            
+        }
+
         public String getPhone() {
             return phone;
         }
@@ -60,11 +71,11 @@ public class Pessoa {
             this.phone = phone;
         }
 
-        public boolean isAdm() {
+        public int isAdm() {
             return adm;
         }
 
-        public void setAdm(boolean adm) {
+        public void setAdm(int adm) {
             this.adm = adm;
         }
 
@@ -75,19 +86,8 @@ public class Pessoa {
                     + "\nO telefone informado foi: " + this.phone + "\nO Nivel de prioridade: " + this.adm);
         }
     
-        public static void main(String[] args) {
-            // Crie uma instância de Pessoa
-            Pessoa pessoa = new Pessoa("Alice", 30, "123456789", "alice@example.com", "123-456-789", true);
-    
-            // Use os métodos getters para acessar os atributos e imprima-os
-            System.out.println("Nome: " + pessoa.getName());
-            System.out.println("Idade: " + pessoa.getAge());
-            System.out.println("CPF: " + pessoa.getCpf());
-            System.out.println("E-mail: " + pessoa.getEmail());
-            System.out.println("Telefone: " + pessoa.getPhone());
-            System.out.println("É administrador: " + pessoa.isAdm());
+        
 
     }
-}
 
 

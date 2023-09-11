@@ -18,7 +18,7 @@ public class Filme {
         this.anoLancamento = anoLancamento;
         this.genero = genero;
         this.sinopse = sinopse;
-        this.disponivelParaAssistir = false; 
+        this.disponivelParaAssistir = true; 
     }
 
     // Getters e setters
