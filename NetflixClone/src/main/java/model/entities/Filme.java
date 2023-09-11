@@ -18,7 +18,7 @@ public class Filme {
         this.anoLancamento = anoLancamento;
         this.genero = genero;
         this.sinopse = sinopse;
-        this.disponivelParaAssistir = true; // Por padrão, um filme é definido como disponível para assistir.
+        this.disponivelParaAssistir = false; 
     }
 
     // Getters e setters
@@ -78,6 +78,32 @@ public class Filme {
         this.disponivelParaAssistir = disponivelParaAssistir;
     }
 
-    // Outros métodos, como toString() para representação em string e métodos de
-    // lógica de negócios, podem ser adicionados aqui.
+    // toString()
+
+    public String toString() {
+        return "Título: " + titulo + "\n" +
+                "Diretor: " + diretor + "\n" +
+                "Duração: " + duracaoMinutos + " minutos\n" +
+                "Ano de Lançamento: " + anoLancamento + "\n" +
+                "Gênero: " + genero + "\n" +
+                "Sinopse: " + sinopse + "\n" +
+                "Disponível para Assistir: " + (disponivelParaAssistir ? "Sim" : "Não");
+    }
+    public static void main(String[] args) {
+        // Crie uma instância de Filme
+        Filme filme = new Filme("O Poderoso Chefão", "Francis Ford Coppola", 175, 1972, "Drama", "A história da família Corleone");
+
+        // Use os métodos getters para acessar os atributos e imprima-os
+        System.out.println("Título: " + filme.getTitulo());
+        System.out.println("Diretor: " + filme.getDiretor());
+        System.out.println("Duração: " + filme.getDuracaoMinutos() + " minutos");
+        System.out.println("Ano de Lançamento: " + filme.getAnoLancamento());
+        System.out.println("Gênero: " + filme.getGenero());
+        System.out.println("Sinopse: " + filme.getSinopse());
+        System.out.println("Disponível para Assistir: " + (filme.isDisponivelParaAssistir() ? "Sim" : "Não"));
+
+    }
 }
+
+
+
