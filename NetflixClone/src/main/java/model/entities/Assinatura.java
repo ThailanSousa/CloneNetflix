@@ -1,24 +1,24 @@
 package main.java.model.entities;
 
 public class Assinatura {
-    private String nomeAssinante;
+    private String nomeAssinatura;
     private double precoMensal;
     private int duracaoMeses;
     private boolean ativa;
 
-    public Assinatura(String nomeAssinante, double precoMensal, int duracaoMeses) {
-        this.nomeAssinante = nomeAssinante;
+    public Assinatura(String nomeAssinatura, double precoMensal, int duracaoMeses) {
+        this.nomeAssinatura = nomeAssinatura;
         this.precoMensal = precoMensal;
         this.duracaoMeses = duracaoMeses;
         this.ativa = true;
     }
 
-    public String getNomeAssinante() {
-        return nomeAssinante;
+    public String getNomeAssinatura() {
+        return nomeAssinatura;
     }
 
-    public void setNomeAssinante(String nomeAssinante) {
-        this.nomeAssinante = nomeAssinante;
+    public void setNomeAssinatura(String nomeAssinatura) {
+        this.nomeAssinatura = nomeAssinatura;
     }
 
     public double getPrecoMensal() {
@@ -47,12 +47,12 @@ public class Assinatura {
 
     @Override
     public String toString() {
-        return "Nome do Assinante: " + nomeAssinante + "\n" +
+        return "Nome do Assinante: " + nomeAssinatura + "\n" +
                 "Preço Mensal: $" + precoMensal + "\n" +
                 "Duração da Assinatura: " + duracaoMeses + " meses\n" +
                 "Status: " + (ativa ? "Ativa" : "Inativa");
     }
-        public static void main(String[] args) {
+        /*public static void main(String[] args) {
             // Crie algumas instâncias de Assinatura
             Assinatura assinatura1 = new Assinatura("João", 9.99, 12);
             Assinatura assinatura2 = new Assinatura("Maria", 14.99, 6);
@@ -63,7 +63,7 @@ public class Assinatura {
     
             System.out.println("\nAssinatura 2:");
             System.out.println(assinatura2.toString());
-        }
+        }*/
     }
     
 
