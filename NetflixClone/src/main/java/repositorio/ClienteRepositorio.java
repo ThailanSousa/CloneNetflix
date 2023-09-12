@@ -2,19 +2,22 @@ package main.java.repositorio;
 
 import java.sql.PreparedStatement;
 import java.sql.Connection;
-import java.sql.ParameterMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.SQLException;
-import util.ConnectionFactory;
-import util.ConnectionSingleton;
+
 
 import main.java.model.Interface.IClienteMSQL;
 import main.java.model.entities.Cliente;
+import util.ConnectionSingleton;
 
 public class ClienteRepositorio implements IClienteMSQL {
-  private Connection conn;
+
+  private Connection conn = null;
+  public ClienteRepositorio()  {
+		try {
+			this.conn = ConnectionSingleton.getInstance().conexao;			 
+		} catch (Exception e) {}
+			// TODO: handle exception
+		}
+
   public boolean cadastrarCliente(Cliente cliente){
     try{
         String sql ="INSERT INTO  cliente"
@@ -29,8 +32,10 @@ public class ClienteRepositorio implements IClienteMSQL {
         ps.setString(5,null);
         ps.setString(6,cliente.getPhone());
         ps.setString(7, cliente.getDataDeCadastro());
-        ps.setString(0, cliente.getTipoDeCliente());
+        ps.setString(8, cliente.getTipoDeCliente());
+        ps.executeUpdate();
         System.out.println("Cliente Cadastrado com SUCESSO!");
+
         return true;
       } catch (Exception e){
         System.out.println("Erro" + e);

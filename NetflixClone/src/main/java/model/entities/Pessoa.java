@@ -1,8 +1,5 @@
 package main.java.model.entities;
 
-import java.sql.PreparedStatement;
-
-import conexao.Conexao;
 
 abstract class Pessoa {
 
@@ -11,17 +8,19 @@ abstract class Pessoa {
         private String cpf;
         private String email;
         private String phone;
-        private boolean adm;
 
-        
 
-        public Pessoa(String name, int age, String cpf, String email, String phone, boolean adm) {
+        public Pessoa(String name, String cpf){
+            this.name = name;
+            this.cpf = cpf;
+        }
+
+        public Pessoa(String name, int age, String cpf, String email, String phone ) {
             this.name = name;
             this.age = age;
             this.cpf = cpf;
             this.email = email;
             this.phone = null;
-            this.adm = adm;
         }
 
         public String getName() {
@@ -44,9 +43,9 @@ abstract class Pessoa {
             return cpf;
         }
 
-  public void setCpf(String cpf) {
+        public void setCpf(String cpf) {
     this.cpf = cpf;
-  }
+        }
 
         public String getEmail() {
             return email;
@@ -62,14 +61,6 @@ abstract class Pessoa {
 
         public void setPhone(String phone) {
             this.phone = phone;
-        }
-
-        public boolean isAdm() {
-            return adm;
-        }
-
-        public void setAdm(boolean adm) {
-            this.adm = adm;
         }
 
         // METODO DE ALTERAÇÃO DO OBJETO PARA STRING

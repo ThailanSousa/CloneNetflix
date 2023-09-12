@@ -11,11 +11,17 @@ public final class ConnectionSingleton {
 
 	private ConnectionSingleton() throws SQLException, InterruptedException {
 
-		String url = "jdbc:mysql://localhost:3306/cloneflix?useTimezone=true&serverTimezone=UTC"; // Nome da base de dados
+		try {
+			String url = "jdbc:mysql://localhost:3306/cloneflix?useTimezone=true&serverTimezone=UTC"; // Nome da base de dados
 		String user = "root"; // nome do usu�rio do MySQL
-		String password = "root"; // senha do MySQL
+		String password = "95399788"; // senha do MySQL
 
 		this.conexao = DriverManager.getConnection(url, user, password);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
 
 	}
 

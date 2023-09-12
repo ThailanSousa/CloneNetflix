@@ -1,18 +1,15 @@
-import main.java.model.entities.Pessoa;
+import main.java.model.entities.Cliente;
+import main.java.repositorio.ClienteRepositorio;
 
 public class app {
 
     public static void main(String[]args){
 
-        Pessoa thailan = new Pessoa();
+        Cliente cliente = new Cliente("Marcelo Arruda", "08375188492");
 
-        thailan.setName("thailan");
-        thailan.setEmail("Thailan@gmail.com");
-        thailan.setSenha("123456");
-
-        new Pessoa().cadastrarUsuario(thailan);
+        ClienteRepositorio clienteRepo = new ClienteRepositorio();
         
-
+        clienteRepo.cadastrarCliente(cliente);
 
     }
     
