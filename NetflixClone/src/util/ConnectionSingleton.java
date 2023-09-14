@@ -28,7 +28,6 @@ public final class ConnectionSingleton {
 	public static ConnectionSingleton getInstance() throws SQLException, InterruptedException {
 		if (instance == null|| instance.conexao.isClosed()) {
 			instance = new ConnectionSingleton();
-			System.out.println("Novo Objeto");
 		}
 		else {
 			
