@@ -14,7 +14,7 @@ public final class ConnectionSingleton {
 		try {
 			String url = "jdbc:mysql://localhost:3306/cloneflix?useTimezone=true&serverTimezone=UTC"; // Nome da base de dados
 		String user = "root"; // nome do usu�rio do MySQL
-		String password = "95399788"; // senha do MySQL
+		String password = "root"; // senha do MySQL
 
 		this.conexao = DriverManager.getConnection(url, user, password);
 			
@@ -28,7 +28,6 @@ public final class ConnectionSingleton {
 	public static ConnectionSingleton getInstance() throws SQLException, InterruptedException {
 		if (instance == null|| instance.conexao.isClosed()) {
 			instance = new ConnectionSingleton();
-			System.out.println("Novo Objeto");
 		}
 		else {
 			
