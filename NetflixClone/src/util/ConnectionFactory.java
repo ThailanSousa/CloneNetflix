@@ -10,7 +10,7 @@ public class ConnectionFactory  {
 			
 		String url = "jdbc:mysql://localhost:3306/cloneflix?useTimezone=true&serverTimezone=UTC"; //Nome da base de dados
 		String user = "root"; //nome do usu�rio do MySQL
-		String password = "95399788"; //senha do MySQL
+		String password = "root"; //senha do MySQL
 
 		
 		conn = DriverManager.getConnection(url, user, password);
