@@ -14,7 +14,7 @@ public class DatetimeExtensions
             return data; 
 			
 		} catch (Exception e) {
-			System.out.println("Data Inválida: Error:"+e.getMessage());
+			System.out.println("Data Invï¿½lida: Error:"+e.getMessage());
 			throw e;
 		}
     	
@@ -27,7 +27,7 @@ public class DatetimeExtensions
             return formato.format(date); 
 			
 		} catch (Exception e) {
-			System.out.println("Data Inválida: Error:"+e.getMessage());
+			System.out.println("Data Invï¿½lida: Error:"+e.getMessage());
 			throw e;
 		}
     	

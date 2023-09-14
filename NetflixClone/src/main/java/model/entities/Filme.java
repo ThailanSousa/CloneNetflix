@@ -11,14 +11,14 @@ public class Filme {
     private boolean disponivelParaAssistir;
 
     // Construtor
-    public Filme(String titulo, String diretor, int duracaoMinutos, int anoLancamento, String genero, String sinopse) {
+    public Filme(String titulo, String diretor, int duracaoMinutos, int anoLancamento, String genero, String sinopse, boolean disponivelParaAssistir) {
         this.titulo = titulo;
         this.diretor = diretor;
         this.duracaoMinutos = duracaoMinutos;
         this.anoLancamento = anoLancamento;
         this.genero = genero;
         this.sinopse = sinopse;
-        this.disponivelParaAssistir = true; 
+        this.disponivelParaAssistir = disponivelParaAssistir; 
     }
 
     // Getters e setters
@@ -91,7 +91,7 @@ public class Filme {
     }
     public static void main(String[] args) {
         // Crie uma instância de Filme
-        Filme filme = new Filme("O Poderoso Chefão", "Francis Ford Coppola", 175, 1972, "Drama", "A história da família Corleone");
+        Filme filme = new Filme("O Poderoso Chefão", "Francis Ford Coppola", 175, 1972, "Drama", "A história da família Corleone",true);
 
         // Use os métodos getters para acessar os atributos e imprima-os
         System.out.println("Título: " + filme.getTitulo());

@@ -6,13 +6,7 @@ import main.java.model.entities.Filme;
 
 public interface IFilmeRepositorio {
 
-    public boolean salvarFilme(Filme filme);
-
-    public ArrayList<Filme> listarFilme();
-
-    public boolean  deletarFilme(String titulo);
-
-    public boolean alterarFilme(Filme filme);
+    public boolean cadastrarFilme(Filme filme);
     
     
 }
