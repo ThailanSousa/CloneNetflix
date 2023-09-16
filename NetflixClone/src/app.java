@@ -4,10 +4,12 @@ import main.java.model.entities.Cliente;
 import main.java.model.entities.Filme;
 import main.java.repositorio.ClienteRepositorio;
 import main.java.repositorio.FilmeRepositorio;
+import main.java.service.ClienteService;
 
 public class app {
 
     public static void main(String[] args) {
+        ClienteService clienteService = new ClienteService();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -22,39 +24,13 @@ public class app {
         switch (escolha) {
             case 1:
                 System.out.println("Você escolheu cadastrar cliente.");
-                Scanner inputCad = new Scanner(System.in);
-
-                Cliente cliente = new Cliente(null, null);
-
-                System.out.println("Digite seu nome:");
-                cliente.setName(inputCad.nextLine());
-                System.out.println("digite sua idade: ");
-                cliente.setAge(inputCad.nextInt());
-                inputCad.nextLine(); // consume quebra de linha
-                System.out.println("Digite seu CPF:");
-                cliente.setCpf(inputCad.nextLine());
-                System.out.println("Digite seu telefone: ");
-                cliente.setPhone(inputCad.nextLine());
-                System.out.println("Digite seu E-mail: ");
-                cliente.setEmail(inputCad.nextLine());
-                System.out.println("Digite sua senha: ");
-                cliente.setPassword(inputCad.nextLine());
-                System.out.println("Data de cadastro (no formato AAAA-MM-DD):");
-                cliente.setDataDeCadastro(inputCad.nextLine());
-
-                ClienteRepositorio clienteRepo = new ClienteRepositorio();
-
-                clienteRepo.cadastrarCliente(cliente);
-
-                inputCad.close();
+                clienteService.cadastarCliente();
                 break;
-            // ...
-case 2:
-System.out.println("Você escolheu alterar cliente.");
-Scanner inputUpdate = new Scanner(System.in);
-
-System.out.println("Digite o CPF do cliente que deseja atualizar:");
-String cpfToUpdate = inputUpdate.nextLine();
+            case 2:
+                System.out.println("Você escolheu alterar cliente.");
+                Scanner inputUpdate = new Scanner(System.in);
+                System.out.println("Digite o CPF do cliente que deseja atualizar:");
+                String cpfToUpdate = inputUpdate.nextLine();
 
 ClienteRepositorio clienteRepositorio = new ClienteRepositorio();
 Cliente clienteToUpdate = clienteRepositorio.obterClientePorCPF(cpfToUpdate);

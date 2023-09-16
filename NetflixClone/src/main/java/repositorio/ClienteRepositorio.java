@@ -25,8 +25,8 @@ public class ClienteRepositorio implements IClienteMSQL {
   public boolean cadastrarCliente(Cliente cliente) {
     try {
       String sql = "INSERT INTO cliente " +
-          "(`name`,`agedate`,`cpf`,`email`,`password`,`phone`,`dataDeCadastro`)" +
-          "VALUES(?,?,?,?,?,?,?)";
+          "(`name`,`agedate`,`cpf`,`email`,`password`,`phone`)" +
+          "VALUES(?,?,?,?,?,?,)";
 
       PreparedStatement ps = conn.prepareStatement(sql);
       ps.setString(1, cliente.getName());
@@ -35,9 +35,9 @@ public class ClienteRepositorio implements IClienteMSQL {
       ps.setString(4, cliente.getEmail());
       ps.setString(5, cliente.getPassword());// senha
       ps.setString(6, cliente.getPhone());
-      ps.setString(7, cliente.getDataDeCadastro());
+
       ps.executeUpdate();
-      System.out.println("Cliente Cadastrado com SUCESSO!");
+      System.out.println("Cliente Cadastrado Repositorio");
 
       return true;
     } catch (Exception e) {
