@@ -1,9 +1,7 @@
 import java.util.Scanner;
 
 import main.java.model.entities.Cliente;
-import main.java.model.entities.Filme;
 import main.java.repositorio.ClienteRepositorio;
-import main.java.repositorio.FilmeRepositorio;
 import main.java.service.ClienteService;
 
 public class app {

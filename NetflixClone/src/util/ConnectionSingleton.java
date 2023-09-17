@@ -12,25 +12,23 @@ public final class ConnectionSingleton {
 	private ConnectionSingleton() throws SQLException, InterruptedException {
 
 		try {
-			String url = "jdbc:mysql://localhost:3306/cloneflix?useTimezone=true&serverTimezone=UTC"; // Nome da base de dados
-		String user = "root"; // nome do usu�rio do MySQL
-		String password = "95399788"; // senha do MySQL
+			String url = "jdbc:mysql://localhost:3306/cloneflix?useTimezone=true&serverTimezone=UTC"; 
+			String user = "root"; 
+			String password = "root"; 
 
-		this.conexao = DriverManager.getConnection(url, user, password);
-			
+			this.conexao = DriverManager.getConnection(url, user, password);
+
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
 
 	}
 
 	public static ConnectionSingleton getInstance() throws SQLException, InterruptedException {
-		if (instance == null|| instance.conexao.isClosed()) {
+		if (instance == null || instance.conexao.isClosed()) {
 			instance = new ConnectionSingleton();
-		}
-		else {
-			
+		} else {
+
 			System.out.println("REUSO DE CONEXAO");
 		}
 		return instance;
