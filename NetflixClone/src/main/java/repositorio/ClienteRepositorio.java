@@ -26,7 +26,7 @@ public class ClienteRepositorio implements IClienteMSQL {
     try {
       String sql = "INSERT INTO cliente " +
           "(`name`,`agedate`,`cpf`,`email`,`password`,`phone`)" +
-          "VALUES(?,?,?,?,?,?,)";
+          "VALUES(?,?,?,?,?,?)";
 
       PreparedStatement ps = conn.prepareStatement(sql);
       ps.setString(1, cliente.getName());
