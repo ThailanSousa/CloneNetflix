@@ -6,6 +6,8 @@ public class Assinatura {
     private int duracaoMeses;
     private boolean ativa;
 
+    public Assinatura(){}
+
     public Assinatura(String nomeAssinatura, double precoMensal, int duracaoMeses) {
         this.nomeAssinatura = nomeAssinatura;
         this.precoMensal = precoMensal;

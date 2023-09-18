@@ -1,6 +1,23 @@
 {
   "java.project.referencedLibraries": [
     "lib/**/*.jar",
-    "NetflixClone/src/lib/mysql-connector-j-8.0.33.jar"
+    "NetflixClone/src/lib/mysql-connector-j-8.0.33.jar",
+    "c:\\Users\\T\\Desktop\\mysql-connector-j-8.1.0.jar"
+  ],
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "FirsMySQLConnection",
+      "database": "cloneflix",
+      "username": "root",
+      "password": "root"
+    }
   ]
 }
