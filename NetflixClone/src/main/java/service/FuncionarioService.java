@@ -5,9 +5,9 @@ import java.util.Scanner;
 import main.java.model.entities.Cliente;
 import main.java.repositorio.ClienteRepositorio;
 
-public class ClienteService {
+public class FuncionarioService {
+  
   ClienteRepositorio clienteService = new ClienteRepositorio();
-  ClienteRepositorio clienteRepo = new ClienteRepositorio();
 
   public boolean cadastarCliente() {
 
@@ -31,22 +31,19 @@ public class ClienteService {
     System.out.println("Data de cadastro (no formato AAAA-MM-DD):");
     cliente.setDataDeCadastro(inputCad.nextLine());
 
-    
+    ClienteRepositorio clienteRepo = new ClienteRepositorio();
 
     inputCad.close();
     System.out.println(cliente);
 
-    if (!cliente.getName().isEmpty() &&
-      !cliente.getCpf().isEmpty() &&
-      cliente.getCpf().length() == 11 &&
-      cliente.getEmail().contains("@")) {
+    if (cliente.getName().isEmpty() && cliente.getCpf().isEmpty() && cliente.getCpf().length() == 11 &&
+        cliente.getEmail().contentEquals("@")) {
       System.out.println(cliente);
+      throw new IllegalArgumentException("Verifique os dados inseridos");
+    } else {
       System.out.println("Cliente Cadastrado Service");
       clienteRepo.cadastrarCliente(cliente);
       return true;
-    } else {
-      System.out.println("Verifique os dados inseridos");
-      return false;
     }
   }
 

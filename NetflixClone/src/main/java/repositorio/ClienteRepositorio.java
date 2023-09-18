@@ -10,14 +10,13 @@ import util.ConnectionSingleton;
 
 public class ClienteRepositorio implements IClienteMSQL {
 
-  private Connection conn = null;
+  private Connection conn;
 
   public ClienteRepositorio() {
     try {
       this.conn = ConnectionSingleton.getInstance().conexao;
     } catch (Exception e) {
-      // Trate a exceção de alguma forma apropriada, como registrar ou lançar
-      // novamente.
+     System.out.println("cliente repoitorio" + e);
       e.printStackTrace();
     }
   }
@@ -26,7 +25,7 @@ public class ClienteRepositorio implements IClienteMSQL {
     try {
       String sql = "INSERT INTO cliente " +
           "(`name`,`agedate`,`cpf`,`email`,`password`,`phone`)" +
-          "VALUES(?,?,?,?,?,?,)";
+          "VALUES(?,?,?,?,?,?)";
 
       PreparedStatement ps = conn.prepareStatement(sql);
       ps.setString(1, cliente.getName());
@@ -49,7 +48,7 @@ public class ClienteRepositorio implements IClienteMSQL {
   public boolean atualizarCliente(Cliente cliente) {
     try {
       String sql = "UPDATE cliente " +
-          "SET `name` = ?, `agedate` = ?, `email` = ?, `phone` = ? " +
+          "SET `name`= ?, `agedate` = ?, `email` = ?, `phone` = ? " +
           "WHERE `cpf` = ?";
 
       PreparedStatement ps = conn.prepareStatement(sql);

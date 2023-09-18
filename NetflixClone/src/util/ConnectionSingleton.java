@@ -14,7 +14,7 @@ public final class ConnectionSingleton {
 		try {
 			String url = "jdbc:mysql://localhost:3306/cloneflix?useTimezone=true&serverTimezone=UTC"; 
 			String user = "root"; 
-			String password = "root"; 
+			String password = "95399788"; 
 
 			this.conexao = DriverManager.getConnection(url, user, password);
 
