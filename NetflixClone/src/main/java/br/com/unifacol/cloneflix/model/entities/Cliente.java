@@ -1,31 +1,36 @@
 package br.com.unifacol.cloneflix.model.entities;
 
-public class Cliente extends Pessoa {
-  String dataDeCadastro;
-  String password;
-  
-  public Cliente(String name, String cpf) {
-    super(name, cpf);
-  }
-  public Cliente(String name, int age, String cpf, String email, String phone, String dataDeCadastro, String password) {
-    super(name, age, cpf, email, phone);
-    this.dataDeCadastro = dataDeCadastro;
-    this.password = password;
-  }
-  public String getDataDeCadastro() {
-    return dataDeCadastro;
-  }
-  public void setDataDeCadastro(String dataDeCadastro) {
-    this.dataDeCadastro = dataDeCadastro;
-  }
-  public String getPassword() {
-    return password;
-  }
-  public void setPassword(String password) {
-    this.password = password;
-  }
-  
+import java.sql.Timestamp;
+import java.util.Date;
 
-  
-  
+public class Cliente extends Pessoa {
+    private String password;
+    private Timestamp dataDeCadastro;
+
+    public Cliente(String name, String cpf) {
+        super(name, cpf);
+        this.dataDeCadastro = new Timestamp(new Date().getTime()); // Define a data de cadastro automaticamente
+    }
+
+    public Cliente(String name, int age, String cpf, String email, String phone, String password) {
+        super(name, age, cpf, email, phone);
+        this.dataDeCadastro = new Timestamp(new Date().getTime()); // Define a data de cadastro automaticamente
+        this.password = password;
+    }
+
+    public Timestamp getDataDeCadastro() {
+        return dataDeCadastro;
+    }
+
+    public void setDataDeCadastro(Timestamp dataDeCadastro) {
+        this.dataDeCadastro = dataDeCadastro;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
