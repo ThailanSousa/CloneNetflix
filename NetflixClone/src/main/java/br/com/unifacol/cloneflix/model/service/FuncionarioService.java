@@ -28,8 +28,7 @@ public class FuncionarioService {
     cliente.setEmail(inputCad.nextLine());
     System.out.println("Digite sua senha: ");
     cliente.setPassword(inputCad.nextLine());
-    System.out.println("Data de cadastro (no formato AAAA-MM-DD):");
-    cliente.setDataDeCadastro(inputCad.nextLine());
+   
 
     ClienteRepositorio clienteRepo = new ClienteRepositorio();
 

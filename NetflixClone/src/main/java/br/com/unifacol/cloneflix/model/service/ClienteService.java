@@ -2,6 +2,7 @@ package br.com.unifacol.cloneflix.model.service;
 
 import java.util.Scanner;
 
+import br.com.unifacol.cloneflix.enums.Message;
 import br.com.unifacol.cloneflix.model.entities.Cliente;
 import br.com.unifacol.cloneflix.model.repositorio.ClienteRepositorio;
 
@@ -15,31 +16,28 @@ public class ClienteService {
 
     Cliente cliente = new Cliente(null, null);
 
-    System.out.println("Digite seu nome:");
+    System.out.println("Sua data de cadastro é: " + cliente.getDataDeCadastro());
+    System.out.print(Message.NAME.getDescricao());
     cliente.setName(inputCad.nextLine());
-    System.out.println("digite sua idade: ");
+    System.out.print(Message.AGE.getDescricao());
     cliente.setAge(inputCad.nextInt());
-    inputCad.nextLine(); // consume quebra de linha
-    System.out.println("Digite seu CPF:");
+    inputCad.nextLine(); // consumir quebra de linha
+    System.out.print(Message.CPF.getDescricao());
     cliente.setCpf(inputCad.nextLine());
-    System.out.println("Digite seu telefone: ");
+    System.out.print(Message.PHONE.getDescricao());
     cliente.setPhone(inputCad.nextLine());
-    System.out.println("Digite seu E-mail: ");
+    System.out.print(Message.EMAIL.getDescricao());
     cliente.setEmail(inputCad.nextLine());
-    System.out.println("Digite sua senha: ");
+    System.out.print(Message.PASSWORD.getDescricao());
     cliente.setPassword(inputCad.nextLine());
-    System.out.println("Data de cadastro (no formato AAAA-MM-DD):");
-    cliente.setDataDeCadastro(inputCad.nextLine());
-
-    
 
     inputCad.close();
     System.out.println(cliente);
 
     if (!cliente.getName().isEmpty() &&
-      !cliente.getCpf().isEmpty() &&
-      cliente.getCpf().length() == 11 &&
-      cliente.getEmail().contains("@")) {
+        !cliente.getCpf().isEmpty() &&
+        cliente.getCpf().length() == 11 &&
+        cliente.getEmail().contains("@")) {
       System.out.println(cliente);
       System.out.println("Cliente Cadastrado Service");
       clienteRepo.cadastrarCliente(cliente);

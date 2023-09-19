@@ -3,6 +3,7 @@ package br.com.unifacol.cloneflix.model.repositorio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import br.com.unifacol.cloneflix.model.Interface.IClienteMSQL;
 import br.com.unifacol.cloneflix.model.entities.Cliente;
@@ -23,27 +24,29 @@ public class ClienteRepositorio implements IClienteMSQL {
 
   public boolean cadastrarCliente(Cliente cliente) {
     try {
-      String sql = "INSERT INTO cliente " +
-          "(`name`,`agedate`,`cpf`,`email`,`password`,`phone`)" +
-          "VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO cliente " +
+          "(`name`,`agedate`,`cpf`,`email`,`password`,`phone`,`dataDeCadatros`)" +
+          "VALUES(?,?,?,?,?,?,?)";
 
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, cliente.getName());
-      ps.setInt(2, cliente.getAge());
-      ps.setString(3, cliente.getCpf());
-      ps.setString(4, cliente.getEmail());
-      ps.setString(5, cliente.getPassword());// senha
-      ps.setString(6, cliente.getPhone());
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, cliente.getName());
+        ps.setInt(2, cliente.getAge());
+        ps.setString(3, cliente.getCpf());
+        ps.setString(4, cliente.getEmail());
+        ps.setString(5, cliente.getPassword());
+        ps.setString(6, cliente.getPhone());
+        ps.setTimestamp(7, cliente.getDataDeCadastro()); // Define a data de cadastro
 
-      ps.executeUpdate();
-      System.out.println("Cliente Cadastrado Repositorio");
+        ps.executeUpdate();
+        System.out.println("Cliente Cadastrado Repositorio");
 
-      return true;
-    } catch (Exception e) {
-      System.out.println("Erro: " + e);
-      return false;
+        return true;
+    } catch (SQLException e) {
+        System.out.println("Erro: " + e);
+        return false;
     }
-  }
+}
+
 
   public boolean atualizarCliente(Cliente cliente) {
     try {
@@ -57,6 +60,7 @@ public class ClienteRepositorio implements IClienteMSQL {
       ps.setString(3, cliente.getEmail());
       ps.setString(4, cliente.getPhone());
       ps.setString(5, cliente.getCpf());
+      
 
       int rowsUpdated = ps.executeUpdate();
 
@@ -88,7 +92,6 @@ public class ClienteRepositorio implements IClienteMSQL {
         cliente.setCpf(rs.getString("cpf"));
         cliente.setEmail(rs.getString("email"));
         cliente.setPhone(rs.getString("phone"));
-        cliente.setDataDeCadastro(rs.getString("dataDeCadatros"));
         return cliente;
       } else {
         System.out.println("Cliente não encontrado para o CPF: " + cpf);
