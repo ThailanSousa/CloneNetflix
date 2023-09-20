@@ -70,9 +70,6 @@ public class ClienteService {
         System.out.println("Digite o novo E-mail:");
         clienteToUpdate.setEmail(inputUpdate.nextLine());
 
-     
-    
-
         if (clienteToUpdate != null) {
           clienteRepo.atualizarCliente(clienteToUpdate);
         }
@@ -90,4 +87,26 @@ public class ClienteService {
 
   }
 
+  public boolean removerCliente() {
+    try {
+      Scanner ScDelete = new Scanner(System.in);
+      System.out.println("Digite o CPF do cliente que deseja remover:");
+      String cpfToRemove = ScDelete.nextLine();
+
+      Cliente clienteToRemove = clienteRepo.obterClientePorCPF(cpfToRemove);
+
+      if (clienteToRemove != null) {
+        clienteRepo.removerClienteForCpf(cpfToRemove);
+      } else {
+        System.out.println("Cliente com CPF " + cpfToRemove + " não encontrado.");
+      }
+
+      ScDelete.close();
+      return true;
+
+    } catch (Exception e) {
+      System.out.println("Erro ao remover cliente: " + e.getMessage());
+      return false;
+    }
+  }
 }

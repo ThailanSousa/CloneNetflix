@@ -4,8 +4,8 @@ import br.com.unifacol.cloneflix.model.entities.Cliente;
 
 public interface IClienteMSQL{
 
-  public boolean cadastrarCliente(Cliente Cliente);
+  public boolean cadastrarCliente(Cliente Cliente)  ;
   
-  // public boolean removerCliente(Cliente cliente);
+  public void removerClienteForCpf(String cpf) ; 
   
 }

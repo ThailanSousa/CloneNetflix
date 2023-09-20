@@ -24,29 +24,27 @@ public class ClienteRepositorio implements IClienteMSQL {
 
   public boolean cadastrarCliente(Cliente cliente) {
     try {
-        String sql = "INSERT INTO cliente " +
+      String sql = "INSERT INTO cliente " +
           "(`name`,`agedate`,`cpf`,`email`,`password`,`phone`,`dataDeCadatros`)" +
           "VALUES(?,?,?,?,?,?,NOW())";
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, cliente.getName());
-        ps.setInt(2, cliente.getAge());
-        ps.setString(3, cliente.getCpf());
-        ps.setString(4, cliente.getEmail());
-        ps.setString(5, cliente.getPassword());
-        ps.setString(6, cliente.getPhone()); 
-           
+      PreparedStatement ps = conn.prepareStatement(sql);
+      ps.setString(1, cliente.getName());
+      ps.setInt(2, cliente.getAge());
+      ps.setString(3, cliente.getCpf());
+      ps.setString(4, cliente.getEmail());
+      ps.setString(5, cliente.getPassword());
+      ps.setString(6, cliente.getPhone());
 
-        ps.executeUpdate();
-        System.out.println("Cliente Cadastrado Repositorio");
+      ps.executeUpdate();
+      System.out.println("Cliente Cadastrado Repositorio");
 
-        return true;
+      return true;
     } catch (SQLException e) {
-        System.out.println("Erro: " + e);
-        return false;
+      System.out.println("Erro: " + e);
+      return false;
     }
-}
-
+  }
 
   public boolean atualizarCliente(Cliente cliente) {
     try {
@@ -60,7 +58,6 @@ public class ClienteRepositorio implements IClienteMSQL {
       ps.setString(3, cliente.getEmail());
       ps.setString(4, cliente.getPhone());
       ps.setString(5, cliente.getCpf());
-      
 
       int rowsUpdated = ps.executeUpdate();
 
@@ -102,4 +99,26 @@ public class ClienteRepositorio implements IClienteMSQL {
       return null;
     }
   }
+
+  public void removerClienteForCpf(String cpf) {
+    try {
+      String sql = "DELETE FROM cliente WHERE `cpf` = ?";
+      PreparedStatement ps = conn.prepareStatement(sql);
+      ps.setString(1, cpf);
+  
+      int rowsDeleted = ps.executeUpdate();
+  
+      if (rowsDeleted > 0) {
+        System.out.println("Cliente com CPF " + cpf + " removido com sucesso!");
+      } else {
+        System.out.println("Nenhum cliente foi removido. Verifique o CPF.");
+      }
+    } catch (SQLException e) {
+      System.out.println("Erro: " + e);
+    }
+  }
+  
+
+
+
 }

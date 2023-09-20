@@ -1,8 +1,7 @@
 package br.com.unifacol.cloneflix;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import br.com.unifacol.cloneflix.model.service.AssinaturaService;
 import br.com.unifacol.cloneflix.model.service.ClienteService;
 
 public class app {
@@ -12,33 +11,51 @@ public class app {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Bem-vindo ao sistema de cadastro e alteração de clientes!");
-        System.out.println("Escolha uma opção:");
-        System.out.println("1 - Cadastrar cliente");
-        System.out.println("2 - Alterar cliente");
-        System.out.print("Opção: ");
+        int escolha = 0; 
 
-        int escolha = scanner.nextInt();
+        do {
+            System.out.println("Bem-vindo ao sistema de cadastro e alteração de clientes!");
+            System.out.println("Escolha uma opção:");
+            System.out.println("1 - Cadastrar cliente");
+            System.out.println("2 - Alterar cliente");
+            System.out.println("3 - Deletar cliente");
+            System.out.println("0 - Sair");
 
-        switch (escolha) {
-            case 1:
-                System.out.println("Você escolheu cadastrar cliente.");
-                clienteService.cadastarCliente();
-                break;
-            case 2:
-                System.out.println("Você escolheu alterar cliente.");
-                clienteService.atualizarCliente();
-                break;
-            case 3:
-                System.out.println("Você escolheu cadastrar Assinatura.");
-                AssinaturaService.cadastrarAssinatura();
-                break;
+            System.out.print("Opção: ");
 
-            default:
-                System.out.println("Opção inválida. Por favor, escolha 1 para cadastrar ou 2 para alterar.");
-                break;
+            try {
+                escolha = scanner.nextInt();
+
+                switch (escolha) {
+                    case 1:
+                        System.out.println("Você escolheu cadastrar cliente.");
+                        clienteService.cadastarCliente();
+                        break;
+                    case 2:
+                        System.out.println("Você escolheu alterar cliente.");
+                        clienteService.atualizarCliente();
+                        break;
+                    case 3:
+                        System.out.println("Você escolheu deletar cliente.");
+                        clienteService.removerCliente();
+                        break;
+                    case 0:
+                        System.out.println("Saindo do programa. Obrigado!");
+                        break;
+                    default:
+                        System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número.");
+                scanner.nextLine(); 
+            }
+        } while (escolha == 0);{
+
+            escolha = escolha - 1;
+
         }
-
         scanner.close();
+        
     }
 }
