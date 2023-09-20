@@ -2,6 +2,7 @@ package br.com.unifacol.cloneflix.model.repositorio;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import br.com.unifacol.cloneflix.model.entities.Assinatura;
 import br.com.unifacol.cloneflix.util.ConnectionSingleton;
@@ -66,31 +67,31 @@ public class AssinaturaRepositorio {
       return false;
     }
   }
-  /*
-   * public Cliente obterAssinaturaPorNomeAssinatura(String nomeAssinatura) {
-   * try {
-   * String sql = "SELECT * FROM assinatura WHERE `nomeAssinatura` = ? ";
-   * PreparedStatement ps = conn.prepareStatement(sql);
-   * ps.setString(1, nomeAssinatura);
-   * 
-   * ResultSet rs = ps.executeQuery();
-   * 
-   * if (rs.next()) {
-   * Assinatura assinatura = new Assinatura();
-   * assinatura.setNomeAssinatura(rs.getString("nomeAssinatura"));
-   * assinatura.setPrecoMensal(rs.getDouble("precoMensal"));
-   * assinatura.setDuracaoMeses(rs.getInt("duracaoMeses"));
-   * assinatura.setAtiva(rs.getBoolean("ativa"));
-   * return assinatura;
-   * } else {
-   * System.out.println("Assinatura não encontrado para o nome: " +
-   * nomeAssinatura);
-   * return null;
-   * }
-   * } catch (Exception e) {
-   * System.out.println("Erro: " + e);
-   * return null;
-   * }
-   * }
-   */
+
+  public Assinatura obterAssinaturaPorNomeAssinatura(String nomeAssinatura) {
+    try {
+      String sql = "SELECT * FROM assinatura WHERE `nomeAssinatura` = ? ";
+      PreparedStatement ps = conn.prepareStatement(sql);
+      ps.setString(1, nomeAssinatura);
+
+      ResultSet rs = ps.executeQuery();
+
+      if (rs.next()) {
+        Assinatura assinatura = new Assinatura();
+        assinatura.setNomeAssinatura(rs.getString("nomeAssinatura"));
+        assinatura.setPrecoMensal(rs.getDouble("precoMensal"));
+        assinatura.setDuracaoMeses(rs.getInt("duracaoMeses"));
+        assinatura.setAtiva(rs.getBoolean("ativa"));
+        return assinatura;
+      } else {
+        System.out.println("Assinatura não encontrado para o nome: " +
+            nomeAssinatura);
+        return null;
+      }
+    } catch (Exception e) {
+      System.out.println("Erro: " + e);
+      return null;
+    }
+  }
+
 }

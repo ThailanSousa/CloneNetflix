@@ -14,8 +14,9 @@ public class FilmeRepositorio implements IFilmeRepositorio {
     try {
       this.conect = ConnectionSingleton.getInstance().conexao;
     } catch (Exception e) {
+      System.out.println("erro: " + e);
     }
-    // TODO: handle exception
+   
   }
 
   public boolean cadastrarFilme(Filme filme) {

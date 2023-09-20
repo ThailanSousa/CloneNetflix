@@ -26,7 +26,7 @@ public class ClienteRepositorio implements IClienteMSQL {
     try {
         String sql = "INSERT INTO cliente " +
           "(`name`,`agedate`,`cpf`,`email`,`password`,`phone`,`dataDeCadatros`)" +
-          "VALUES(?,?,?,?,?,?,?)";
+          "VALUES(?,?,?,?,?,?,NOW())";
 
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, cliente.getName());
@@ -34,8 +34,8 @@ public class ClienteRepositorio implements IClienteMSQL {
         ps.setString(3, cliente.getCpf());
         ps.setString(4, cliente.getEmail());
         ps.setString(5, cliente.getPassword());
-        ps.setString(6, cliente.getPhone());
-        ps.setTimestamp(7, cliente.getDataDeCadastro()); // Define a data de cadastro
+        ps.setString(6, cliente.getPhone()); 
+           
 
         ps.executeUpdate();
         System.out.println("Cliente Cadastrado Repositorio");

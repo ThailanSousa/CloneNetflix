@@ -67,7 +67,7 @@ abstract class Pessoa {
         public String toString() {
             return ("O Nome  informado foi: " + this.name + "\nA Idade informada foi: " + this.age
                     + "\nO CPF informado foi:  " + this.cpf + "\nO E-mail informado foi: " + this.email
-                    + "\nO telefone informado foi: " + this.phone + "\nO Nivel de prioridade: " );
+                    + "\nO telefone informado foi: " + this.phone);
         }
     
         public static void main(String[] args) {
