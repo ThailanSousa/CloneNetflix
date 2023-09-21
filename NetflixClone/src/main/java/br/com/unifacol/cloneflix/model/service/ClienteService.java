@@ -1,5 +1,6 @@
 package br.com.unifacol.cloneflix.model.service;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import br.com.unifacol.cloneflix.enums.Message;
@@ -74,7 +75,7 @@ public class ClienteService {
           clienteRepo.atualizarCliente(clienteToUpdate);
         }
       } else {
-        System.out.println("Cliente com CPF " + cpfToUpdate + " não encontrado.");
+
       }
 
       inputUpdate.close();
@@ -98,7 +99,7 @@ public class ClienteService {
       if (clienteToRemove != null) {
         clienteRepo.removerClienteForCpf(cpfToRemove);
       } else {
-        System.out.println("Cliente com CPF " + cpfToRemove + " não encontrado.");
+
       }
 
       ScDelete.close();
@@ -109,4 +110,14 @@ public class ClienteService {
       return false;
     }
   }
+
+  public boolean listarTodos() throws SQLException{
+  for (Cliente cliente : this.clienteRepo.listarTodos()) {
+			 System.out.println(cliente);
+		}
+  return false;
+	}
 }
+
+  
+

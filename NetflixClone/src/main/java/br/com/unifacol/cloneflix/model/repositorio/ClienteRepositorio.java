@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import br.com.unifacol.cloneflix.model.Interface.IClienteMSQL;
 import br.com.unifacol.cloneflix.model.entities.Cliente;
@@ -75,6 +76,7 @@ public class ClienteRepositorio implements IClienteMSQL {
   }
 
   public Cliente obterClientePorCPF(String cpf) {
+
     try {
       String sql = "SELECT * FROM cliente WHERE `cpf` = ?";
       PreparedStatement ps = conn.prepareStatement(sql);
@@ -105,9 +107,9 @@ public class ClienteRepositorio implements IClienteMSQL {
       String sql = "DELETE FROM cliente WHERE `cpf` = ?";
       PreparedStatement ps = conn.prepareStatement(sql);
       ps.setString(1, cpf);
-  
+
       int rowsDeleted = ps.executeUpdate();
-  
+
       if (rowsDeleted > 0) {
         System.out.println("Cliente com CPF " + cpf + " removido com sucesso!");
       } else {
@@ -117,8 +119,43 @@ public class ClienteRepositorio implements IClienteMSQL {
       System.out.println("Erro: " + e);
     }
   }
-  
 
+  @Override
+  public ArrayList<Cliente> listarTodos() throws SQLException {
 
+    String sql = "SELECT * FROM cliente;";
+    PreparedStatement ps = conn.prepareStatement(sql);
+
+    ResultSet rs = ps.executeQuery();
+
+    ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    while (rs.next()) {
+
+     Cliente cliente = new Cliente(null, null);
+        cliente.setName(rs.getString("name"));
+        cliente.setAge(rs.getInt("agedate"));
+        cliente.setCpf(rs.getString("cpf"));
+        cliente.setEmail(rs.getString("email"));
+        cliente.setPhone(rs.getString("phone"));
+        
+        
+      
+      // e.setTitular(rs.getBoolean("isTitular"));
+
+      clientes.add(cliente);
+
+    }
+    return clientes;
+
+    
+  }
+
+  @Override
+  public Cliente listarPorCpf(String cpf) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'listarPorCpf'");
+  }
+
+ 
 
 }

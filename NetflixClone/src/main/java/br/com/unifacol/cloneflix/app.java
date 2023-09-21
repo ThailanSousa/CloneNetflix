@@ -1,12 +1,13 @@
 package br.com.unifacol.cloneflix;
 
+import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import br.com.unifacol.cloneflix.model.service.ClienteService;
 
 public class app {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         ClienteService clienteService = new ClienteService();
 
         Scanner scanner = new Scanner(System.in);
@@ -19,6 +20,7 @@ public class app {
             System.out.println("1 - Cadastrar cliente");
             System.out.println("2 - Alterar cliente");
             System.out.println("3 - Deletar cliente");
+            System.out.println("4 - litar todos os clientes");
             System.out.println("0 - Sair");
 
             System.out.print("Opção: ");
@@ -38,6 +40,11 @@ public class app {
                     case 3:
                         System.out.println("Você escolheu deletar cliente.");
                         clienteService.removerCliente();
+                        break;
+                    
+                    case 4:
+                        System.out.println("Você escolheu listar todos os clientes.");
+                        clienteService.listarTodos();
                         break;
                     case 0:
                         System.out.println("Saindo do programa. Obrigado!");
