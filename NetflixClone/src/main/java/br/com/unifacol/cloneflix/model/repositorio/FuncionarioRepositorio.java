@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import br.com.unifacol.cloneflix.model.entities.Cliente;
 import br.com.unifacol.cloneflix.model.entities.Funcionario;
 import br.com.unifacol.cloneflix.util.ConnectionSingleton;
 
