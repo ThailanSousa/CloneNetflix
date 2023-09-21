@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import br.com.unifacol.cloneflix.model.service.AssinaturaService;
 import br.com.unifacol.cloneflix.model.service.ClienteService;
+import br.com.unifacol.cloneflix.model.service.FuncionarioService;
+import br.com.unifacol.cloneflix.model.service.FilmeService;
 
 public class app {
 

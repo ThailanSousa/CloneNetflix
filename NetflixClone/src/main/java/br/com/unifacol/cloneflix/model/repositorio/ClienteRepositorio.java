@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import br.com.unifacol.cloneflix.model.Interface.IClienteMSQL;
 import br.com.unifacol.cloneflix.model.entities.Cliente;
 import br.com.unifacol.cloneflix.util.ConnectionSingleton;
+import br.com.unifacol.cloneflix.enums.Message;
 
 public class ClienteRepositorio implements IClienteMSQL {
 
@@ -35,10 +36,9 @@ public class ClienteRepositorio implements IClienteMSQL {
         ps.setString(4, cliente.getEmail());
         ps.setString(5, cliente.getPassword());
         ps.setString(6, cliente.getPhone()); 
-           
 
         ps.executeUpdate();
-        System.out.println("Cliente Cadastrado Repositorio");
+        System.out.println(Message.SUCESSO);
 
         return true;
     } catch (SQLException e) {
@@ -46,7 +46,6 @@ public class ClienteRepositorio implements IClienteMSQL {
         return false;
     }
 }
-
 
   public boolean atualizarCliente(Cliente cliente) {
     try {
@@ -65,7 +64,7 @@ public class ClienteRepositorio implements IClienteMSQL {
       int rowsUpdated = ps.executeUpdate();
 
       if (rowsUpdated > 0) {
-        System.out.println("Cliente atualizado com sucesso!");
+        System.out.println(Message.ALTERACAO);
         return true;
       } else {
         System.out.println("Nenhum cliente foi atualizado. Verifique o CPF.");
@@ -94,7 +93,7 @@ public class ClienteRepositorio implements IClienteMSQL {
         cliente.setPhone(rs.getString("phone"));
         return cliente;
       } else {
-        System.out.println("Cliente não encontrado para o CPF: " + cpf);
+        System.out.println(Message.INVALIDO + cpf);
         return null;
       }
     } catch (Exception e) {
@@ -102,4 +101,5 @@ public class ClienteRepositorio implements IClienteMSQL {
       return null;
     }
   }
+
 }

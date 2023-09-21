@@ -8,10 +8,10 @@ public class Filme {
     private int anoLancamento;
     private String genero;
     private String sinopse;
-    private boolean disponivelParaAssistir;
+    private int disponivelParaAssistir;
 
     // Construtor
-    public Filme(String titulo, String diretor, int duracaoMinutos, int anoLancamento, String genero, String sinopse, boolean disponivelParaAssistir) {
+    public Filme(String titulo, String diretor, int duracaoMinutos, int anoLancamento, String genero, String sinopse, int disponivelParaAssistir) {
         this.titulo = titulo;
         this.diretor = diretor;
         this.duracaoMinutos = duracaoMinutos;
@@ -70,11 +70,11 @@ public class Filme {
         this.sinopse = sinopse;
     }
 
-    public boolean isDisponivelParaAssistir() {
+    public int getDisponivelParaAssistir() {
         return disponivelParaAssistir;
     }
 
-    public void setDisponivelParaAssistir(boolean disponivelParaAssistir) {
+    public void setDisponivelParaAssistir(int disponivelParaAssistir) {
         this.disponivelParaAssistir = disponivelParaAssistir;
     }
 
@@ -86,23 +86,9 @@ public class Filme {
                 "Duração: " + duracaoMinutos + " minutos\n" +
                 "Ano de Lançamento: " + anoLancamento + "\n" +
                 "Gênero: " + genero + "\n" +
-                "Sinopse: " + sinopse + "\n" +
-                "Disponível para Assistir: " + (disponivelParaAssistir ? "Sim" : "Não");
+                "Sinopse: " + sinopse + "\n";
     }
-    // public static void main(String[] args) {
-    //     // Crie uma instância de Filme
-    //     Filme filme = new Filme("O Poderoso Chefão", "Francis Ford Coppola", 175, 1972, "Drama", "A história da família Corleone",true);
-
-    //     // Use os métodos getters para acessar os atributos e imprima-os
-    //     System.out.println("Título: " + filme.getTitulo());
-    //     System.out.println("Diretor: " + filme.getDiretor());
-    //     System.out.println("Duração: " + filme.getDuracaoMinutos() + " minutos");
-    //     System.out.println("Ano de Lançamento: " + filme.getAnoLancamento());
-    //     System.out.println("Gênero: " + filme.getGenero());
-    //     System.out.println("Sinopse: " + filme.getSinopse());
-    //     System.out.println("Disponível para Assistir: " + (filme.isDisponivelParaAssistir() ? "Sim" : "Não"));
-
-    // }
+    
 }
 
 

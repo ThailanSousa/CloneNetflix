@@ -37,7 +37,7 @@ public class ClienteService {
         cliente.getCpf().length() == 11 &&
         cliente.getEmail().contains("@")) {
       System.out.println(cliente);
-      System.out.println("Cliente Cadastrado Service");
+
       clienteRepo.cadastrarCliente(cliente);
       return true;
     } else {
