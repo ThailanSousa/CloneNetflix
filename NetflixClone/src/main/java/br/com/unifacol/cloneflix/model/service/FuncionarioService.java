@@ -2,49 +2,56 @@ package br.com.unifacol.cloneflix.model.service;
 
 import java.util.Scanner;
 
-import br.com.unifacol.cloneflix.model.entities.Cliente;
-import br.com.unifacol.cloneflix.model.repositorio.ClienteRepositorio;
+import br.com.unifacol.cloneflix.model.Interface.IFuncionarioMSQL;
+import br.com.unifacol.cloneflix.model.entities.Funcionario;
+import br.com.unifacol.cloneflix.model.repositorio.FuncionarioRepositorio;
 
-public class FuncionarioService {
+public class FuncionarioService implements IFuncionarioMSQL {
   
-  ClienteRepositorio clienteService = new ClienteRepositorio();
+  FuncionarioRepositorio funcionarioService = new FuncionarioRepositorio();
 
-  public boolean cadastarCliente() {
+  public boolean cadastrarFuncionario() {
 
     Scanner inputCad = new Scanner(System.in);
 
-    Cliente cliente = new Cliente(null, null);
+    Funcionario funcionario = new Funcionario(null, 0, null, null, null, 0, 0);
 
     System.out.println("Digite seu nome:");
-    cliente.setName(inputCad.nextLine());
+    funcionario.setName(inputCad.nextLine());
     System.out.println("digite sua idade: ");
-    cliente.setAge(inputCad.nextInt());
+    funcionario.setAge(inputCad.nextInt());
     inputCad.nextLine(); // consume quebra de linha
     System.out.println("Digite seu CPF:");
-    cliente.setCpf(inputCad.nextLine());
-    System.out.println("Digite seu telefone: ");
-    cliente.setPhone(inputCad.nextLine());
+    funcionario.setCpf(inputCad.nextLine());
     System.out.println("Digite seu E-mail: ");
-    cliente.setEmail(inputCad.nextLine());
-    System.out.println("Digite sua senha: ");
-    cliente.setPassword(inputCad.nextLine());
-   
-
-    ClienteRepositorio clienteRepo = new ClienteRepositorio();
+    funcionario.setEmail(inputCad.nextLine());
+    System.out.println("Digite seu telefone: ");
+    funcionario.setPhone(inputCad.nextLine());
+    
+    FuncionarioRepositorio funcionarioRepo = new FuncionarioRepositorio();
 
     inputCad.close();
-    System.out.println(cliente);
+    System.out.println(funcionario);
 
-    if (cliente.getName().isEmpty() && cliente.getCpf().isEmpty() && cliente.getCpf().length() == 11 &&
-        cliente.getEmail().contentEquals("@")) {
-      System.out.println(cliente);
+    if (funcionario.getName().isEmpty() && funcionario.getCpf().isEmpty() && funcionario.getCpf().length() == 11 &&
+        funcionario.getEmail().contentEquals("@")) {
+      System.out.println(funcionario);
       throw new IllegalArgumentException("Verifique os dados inseridos");
     } else {
       System.out.println("Cliente Cadastrado Service");
-      clienteRepo.cadastrarCliente(cliente);
+      funcionarioRepo.cadastrarFuncionario(funcionario);
       return true;
     }
   }
   
 
+  public boolean atualizarFuncionario(Funcionario funcionario){
+    
+    try {
+      
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
 }

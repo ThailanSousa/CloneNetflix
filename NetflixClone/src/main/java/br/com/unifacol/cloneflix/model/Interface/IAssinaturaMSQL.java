@@ -7,7 +7,4 @@ public interface IAssinaturaMSQL {
 
     public boolean salvarAssinatura(Assinatura assinatura);
 
-      
-
-    
 }

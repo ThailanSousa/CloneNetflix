@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import br.com.unifacol.cloneflix.enums.Message;
 import br.com.unifacol.cloneflix.model.entities.Assinatura;
 import br.com.unifacol.cloneflix.util.ConnectionSingleton;
 
@@ -33,7 +34,7 @@ public class AssinaturaRepositorio {
 
       ps.executeUpdate();
 
-      System.out.println("Assinatura cadastrada com SUCESSO!");
+      System.out.println(Message.SUCESSO);
       return true;
     } catch (Exception e) {
       System.out.println("Erro: " + e);
@@ -56,7 +57,7 @@ public class AssinaturaRepositorio {
       int rowsUpdated = ps.executeUpdate();
 
       if (rowsUpdated > 0) {
-        System.out.println("Assinatura atualizada com sucesso!");
+        System.out.println(Message.SUCESSO);
         return true;
       } else {
         System.out.println("Nenhuma Assinatura foi atualizado. Verifique o nome da assinatura.");
@@ -84,8 +85,7 @@ public class AssinaturaRepositorio {
         assinatura.setAtiva(rs.getBoolean("ativa"));
         return assinatura;
       } else {
-        System.out.println("Assinatura não encontrado para o nome: " +
-            nomeAssinatura);
+        System.out.println("Assinatura não encontrado para o nome: " + nomeAssinatura);
         return null;
       }
     } catch (Exception e) {

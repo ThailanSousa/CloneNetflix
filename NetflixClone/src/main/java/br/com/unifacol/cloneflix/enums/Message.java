@@ -5,12 +5,16 @@ public enum Message {
   INVALID_EMAIL("E-mail inválido."),
   CAMPO_OBRIGATORIO("Este campo é obrigatório"),
   SUCESSO("Cadastro Realizado com Sucesso!!"),
-  NAME("Digite o novo nome: "),
-  AGE("Digite a nova idade: "),
+  ALTERACAO("Alteração Realizada com Sucesso"),
+  NAME("Digite o nome: "),
+  AGE("Digite a idade: "),
   CPF("Digite seu CPF: "),
   PHONE("Digite seu telefone: "),
   EMAIL("Digite seu E-mail: "),
+  INVALIDO("Informação inserida errada:"),
+  ERRO("ERRO TIPO:"),
   PASSWORD("Digite sua senha: ");
+
 
 
 

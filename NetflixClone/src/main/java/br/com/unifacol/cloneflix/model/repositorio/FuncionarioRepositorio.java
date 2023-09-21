@@ -2,11 +2,13 @@ package br.com.unifacol.cloneflix.model.repositorio;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
+import br.com.unifacol.cloneflix.model.entities.Cliente;
 import br.com.unifacol.cloneflix.model.entities.Funcionario;
 import br.com.unifacol.cloneflix.util.ConnectionSingleton;
 
-public class FuncionarioRepositorio {
+public class FuncionarioRepositorio  {
 
   private Connection conn = null;
 
@@ -59,4 +61,29 @@ public class FuncionarioRepositorio {
     }
   }
 
+  public Funcionario obterFuncionarioCpf(String cpf) {
+    try {
+      String sql = "SELECT * FROM funcionario WHERE `cpf` = ?";
+      PreparedStatement ps = conn.prepareStatement(sql);
+      ps.setString(1, cpf);
+
+      ResultSet rs = ps.executeQuery();
+
+      if (rs.next()) {
+        Funcionario funcionario = new Funcionario(sql, cpf, 0, 0, sql);
+        funcionario.setName(rs.getString("name"));
+        funcionario.setAge(rs.getInt("agedate"));
+        funcionario.setCpf(rs.getString("cpf"));
+        funcionario.setEmail(rs.getString("email"));
+        funcionario.setPhone(rs.getString("phone"));
+        return funcionario;
+      } else {
+        System.out.println("Cliente não encontrado para o CPF: " + cpf);
+        return null;
+      }
+    } catch (Exception e) {
+      System.out.println("Erro: " + e);
+      return null;
+    }
+  }
 }
