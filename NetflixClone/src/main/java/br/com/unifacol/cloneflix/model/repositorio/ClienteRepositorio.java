@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import br.com.unifacol.cloneflix.enums.Message;
 import br.com.unifacol.cloneflix.model.Interface.IClienteMSQL;
@@ -122,31 +123,24 @@ public class ClienteRepositorio implements IClienteMSQL {
   }
 
   @Override
-  public ArrayList<Cliente> listarTodos() throws SQLException {
-
+  public Stack<Cliente> listarTodos() throws SQLException {
     String sql = "SELECT * FROM cliente;";
     PreparedStatement ps = conn.prepareStatement(sql);
 
     ResultSet rs = ps.executeQuery();
 
-    ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    Stack<Cliente> clientes = new Stack<>();
     while (rs.next()) {
-
-      Cliente cliente = new Cliente(null, null);
-      cliente.setName(rs.getString("name"));
-      cliente.setAge(rs.getInt("agedate"));
-      cliente.setCpf(rs.getString("cpf"));
-      cliente.setEmail(rs.getString("email"));
-      cliente.setPhone(rs.getString("phone"));
-
-      // e.setTitular(rs.getBoolean("isTitular"));
-
-      clientes.add(cliente);
-
+        Cliente cliente = new Cliente(sql, sql);
+        cliente.setName(rs.getString("name"));
+        cliente.setAge(rs.getInt("agedate"));
+        cliente.setCpf(rs.getString("cpf"));
+        cliente.setEmail(rs.getString("email"));
+        cliente.setPhone(rs.getString("phone"));
+        clientes.push(cliente);
     }
     return clientes;
-
-  }
+}
 
 public  ArrayList<Cliente> listarPorCpf(String cpf)  throws SQLException {
 
