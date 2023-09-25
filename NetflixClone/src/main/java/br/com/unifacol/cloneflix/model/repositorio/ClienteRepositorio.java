@@ -148,9 +148,31 @@ public class ClienteRepositorio implements IClienteMSQL {
 
   }
 
-  @Override
-  public Cliente listarPorCpf(String cpf) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'listarPorCpf'");
+public  ArrayList<Cliente> listarPorCpf(String cpf)  throws SQLException {
+
+    String sql = "SELECT * FROM cliente WHERE cpf = ?";
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ps.setString(1, cpf);
+
+    ResultSet rs = ps.executeQuery();
+
+    ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    while (rs.next()) {
+
+      Cliente cliente = new Cliente(null, null);
+      cliente.setName(rs.getString("name"));
+      cliente.setAge(rs.getInt("agedate"));
+      cliente.setCpf(rs.getString("cpf"));
+      cliente.setEmail(rs.getString("email"));
+      cliente.setPhone(rs.getString("phone"));
+
+      clientes.add(cliente);
+
+    }
+    return clientes;
+
   }
 }
+
+
+

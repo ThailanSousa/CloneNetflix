@@ -1,6 +1,7 @@
 package br.com.unifacol.cloneflix.model.service;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 import br.com.unifacol.cloneflix.enums.Message;
@@ -111,13 +112,30 @@ public class ClienteService {
     }
   }
 
-  public boolean listarTodos() throws SQLException{
-  for (Cliente cliente : this.clienteRepo.listarTodos()) {
-			 System.out.println(cliente);
-		}
-  return false;
-	}
+  public boolean listarTodos() throws SQLException {
+    for (Cliente cliente : this.clienteRepo.listarTodos()) {
+      System.out.println(cliente);
+    }
+    return false;
+  }
+
+public boolean listarPorCpf(String cpf) throws SQLException {
+    if (cpf == null) {
+        System.out.println("CPF não pode ser nulo.");
+        return false;
+    }
+
+    List<Cliente> clientes = this.clienteRepo.listarPorCpf(cpf);
+    if (clientes.isEmpty()) {
+        System.out.println("Nenhum cliente encontrado com o CPF: " + cpf);
+        return false;
+    }
+
+    for (Cliente cliente : clientes) {
+        System.out.println(cliente);
+    }
+    
+    return true;
 }
 
-  
-
+}

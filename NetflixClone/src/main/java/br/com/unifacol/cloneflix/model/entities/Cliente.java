@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 public class Cliente extends Pessoa {
     private String password;
     private Timestamp dataDeCadastro;
+    
 
     public Cliente(String name, String cpf) {
         super(name, cpf);
