@@ -142,7 +142,7 @@ public class ClienteRepositorio implements IClienteMSQL {
     return clientes;
 }
 
-public  ArrayList<Cliente> listarPorCpf(String cpf)  throws SQLException {
+  public  ArrayList<Cliente> listarPorCpf(String cpf)  throws SQLException {
 
     String sql = "SELECT * FROM cliente WHERE cpf = ?";
     PreparedStatement ps = conn.prepareStatement(sql);
@@ -166,6 +166,7 @@ public  ArrayList<Cliente> listarPorCpf(String cpf)  throws SQLException {
     return clientes;
 
   }
+
 }
 
 

@@ -5,10 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import br.com.unifacol.cloneflix.model.Interface.IFuncionarioMSQL;
 import br.com.unifacol.cloneflix.model.entities.Funcionario;
 import br.com.unifacol.cloneflix.util.ConnectionSingleton;
 
-public class FuncionarioRepositorio  {
+public class FuncionarioRepositorio implements IFuncionarioMSQL  {
 
   private Connection conn = null;
 

@@ -3,6 +3,9 @@ package br.com.unifacol.cloneflix.model.repositorio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Stack;
 
 import br.com.unifacol.cloneflix.model.Interface.IFilmeMSQL;
 import br.com.unifacol.cloneflix.model.entities.Filme;
@@ -103,4 +106,42 @@ public class FilmeRepositorio implements IFilmeMSQL {
     }
   }
 
+
+  public Stack<Filme> listarFilmesPorGenero() throws SQLException {
+    String sql = "SELECT * FROM filme;";
+    PreparedStatement ps = conn.prepareStatement(sql);
+
+    ResultSet rs = ps.executeQuery();
+
+    Stack<Filme> clientes = new Stack<>();
+    while (rs.next()) {
+        Filme filme = new Filme(sql, sql, 0, 0, sql, sql, 0);
+        filme.setTitulo(rs.getString("Titulo"));
+        filme.setSinopse(rs.getString("sinopse"));
+        filme.setAnoLancamento(rs.getInt("ano_lancamento"));
+        filme.setGenero(rs.getString("Genero"));
+    }
+    return clientes;
+};
+
+  public void removerFilmeNome(String titulo) {
+    try {
+      String sql = "DELETE FROM filme WHERE `titulo` = ?";
+      PreparedStatement ps = conn.prepareStatement(sql);
+      ps.setString(1, titulo);
+
+      int rowsDeleted = ps.executeUpdate();
+
+      if (rowsDeleted > 0) {
+        System.out.println("O" + titulo + "Foi removido com Sucesso");
+      } else {
+        System.out.println("Nenhum titulo foi encontrado");
+      }
+    } catch (SQLException e) {
+      System.out.println("Erro: " + e);
+    }
+  }
+    
 }
+
+

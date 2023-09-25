@@ -10,7 +10,7 @@ import br.com.unifacol.cloneflix.model.repositorio.ClienteRepositorio;
 
 public class ClienteService {
   ClienteRepositorio clienteRepo = new ClienteRepositorio();
-
+  
   public boolean cadastarCliente() {
 
     Scanner inputCad = new Scanner(System.in);
@@ -138,4 +138,5 @@ public boolean listarPorCpf(String cpf) throws SQLException {
     return true;
 }
 
+  
 }

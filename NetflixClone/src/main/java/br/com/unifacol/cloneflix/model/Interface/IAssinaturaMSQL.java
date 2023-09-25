@@ -5,6 +5,12 @@ import br.com.unifacol.cloneflix.model.entities.Assinatura;
 
 public interface IAssinaturaMSQL {
 
-    public boolean salvarAssinatura(Assinatura assinatura);
+    public boolean cadastrarAssinatura(Assinatura assinatura);
+
+    public boolean atualizarAssinatura(Assinatura assinatura);
+
+    public Assinatura obterAssinaturaPorNomeAssinatura(String nomeAssinatura);
+
+    public void removerAssinatura(String nome);
 
 }

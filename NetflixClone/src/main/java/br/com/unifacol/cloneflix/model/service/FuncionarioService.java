@@ -6,7 +6,7 @@ import br.com.unifacol.cloneflix.model.Interface.IFuncionarioMSQL;
 import br.com.unifacol.cloneflix.model.entities.Funcionario;
 import br.com.unifacol.cloneflix.model.repositorio.FuncionarioRepositorio;
 
-public class FuncionarioService implements IFuncionarioMSQL {
+public class FuncionarioService {
   
   FuncionarioRepositorio funcionarioService = new FuncionarioRepositorio();
 
