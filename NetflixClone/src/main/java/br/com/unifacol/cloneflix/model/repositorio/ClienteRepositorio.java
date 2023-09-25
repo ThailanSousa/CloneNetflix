@@ -132,15 +132,13 @@ public class ClienteRepositorio implements IClienteMSQL {
     ArrayList<Cliente> clientes = new ArrayList<Cliente>();
     while (rs.next()) {
 
-     Cliente cliente = new Cliente(null, null);
-        cliente.setName(rs.getString("name"));
-        cliente.setAge(rs.getInt("agedate"));
-        cliente.setCpf(rs.getString("cpf"));
-        cliente.setEmail(rs.getString("email"));
-        cliente.setPhone(rs.getString("phone"));
-        
-        
-      
+      Cliente cliente = new Cliente(null, null);
+      cliente.setName(rs.getString("name"));
+      cliente.setAge(rs.getInt("agedate"));
+      cliente.setCpf(rs.getString("cpf"));
+      cliente.setEmail(rs.getString("email"));
+      cliente.setPhone(rs.getString("phone"));
+
       // e.setTitular(rs.getBoolean("isTitular"));
 
       clientes.add(cliente);
@@ -148,7 +146,6 @@ public class ClienteRepositorio implements IClienteMSQL {
     }
     return clientes;
 
-    
   }
 
   @Override
@@ -157,8 +154,3 @@ public class ClienteRepositorio implements IClienteMSQL {
     throw new UnsupportedOperationException("Unimplemented method 'listarPorCpf'");
   }
 }
-
- 
-
-
-

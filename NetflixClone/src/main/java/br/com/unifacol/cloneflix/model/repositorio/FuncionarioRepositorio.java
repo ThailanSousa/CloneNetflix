@@ -3,6 +3,7 @@ package br.com.unifacol.cloneflix.model.repositorio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import br.com.unifacol.cloneflix.model.entities.Funcionario;
 import br.com.unifacol.cloneflix.util.ConnectionSingleton;
@@ -85,4 +86,23 @@ public class FuncionarioRepositorio  {
       return null;
     }
   }
+
+  public void removerFuncionarioForCpf(String cpf) {
+    try {
+      String sql = "DELETE FROM funcionario WHERE `cpf` = ?";
+      PreparedStatement ps = conn.prepareStatement(sql);
+      ps.setString(1, cpf);
+
+      int rowsDeleted = ps.executeUpdate();
+
+      if (rowsDeleted > 0) {
+        System.out.println("Funcionario com CPF " + cpf + " removido com sucesso!");
+      } else {
+        System.out.println("Nenhum funcionario foi removido. Verifique o CPF.");
+      }
+    } catch (SQLException e) {
+      System.out.println("Erro: " + e);
+    }
+  }
+
 }
