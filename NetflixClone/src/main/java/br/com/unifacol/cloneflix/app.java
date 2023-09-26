@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import br.com.unifacol.cloneflix.model.repositorio.FuncionarioRepositorio;
+
 import br.com.unifacol.cloneflix.model.service.ClienteService;
 import br.com.unifacol.cloneflix.model.service.FuncionarioService;
 

@@ -1,18 +1,17 @@
 package br.com.unifacol.cloneflix.model.service;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
-import br.com.unifacol.cloneflix.enums.Message;
-import br.com.unifacol.cloneflix.model.entities.Cliente;
+
 import br.com.unifacol.cloneflix.model.entities.Filme;
 import br.com.unifacol.cloneflix.model.repositorio.FilmeRepositorio;
-import br.com.unifacol.cloneflix.model.repositorio.FuncionarioRepositorio;
 
 public class FilmeService {
   FilmeRepositorio filmeRepo = new FilmeRepositorio();
 
 
-    public boolean cadastarFilme() {
+  public boolean cadastarFilme() {
 
     Scanner inputCad = new Scanner(System.in);
 
@@ -44,6 +43,86 @@ public class FilmeService {
     }
     }
 
+  public boolean atualizarFilme() {
+    try {
+      Scanner inputUpdate = new Scanner(System.in);
+      System.out.println("Digite o nome do Filme que deseja atualizar");
+      String nomeToUpdate = inputUpdate.nextLine();
 
-    
- }
+      Filme filmeToUpdate = filmeRepo.obterFilme(nomeToUpdate);
+
+      if (filmeToUpdate != null) {
+        System.out.println("Digite os novos dados do cliente:");
+
+        System.out.println("Digite o novo titulo:");
+        filmeToUpdate.setTitulo(inputUpdate.nextLine());
+
+        System.out.println("Digite o nome do Diretor:");
+        filmeToUpdate.setDiretor(inputUpdate.nextLine());
+
+        System.out.println("O filme esta disponivel para assistir? \n 1- Sim \n2- Não");
+        filmeToUpdate.setDisponivelParaAssistir(inputUpdate.nextInt());
+        inputUpdate.nextLine(); // Consume quebra de linha
+
+        System.out.println("Digite o novo Genero:");
+        filmeToUpdate.setGenero(inputUpdate.nextLine());
+
+        System.out.println("Digite a nova duração do filme em minutos:");
+        filmeToUpdate.setDuracaoMinutos(inputUpdate.nextInt());
+        inputUpdate.nextLine(); // Consume quebra de linha
+
+        System.out.println("Informe o no ano de lançamento");
+        filmeToUpdate.setAnoLancamento(inputUpdate.nextInt());
+          inputUpdate.nextLine();
+
+          System.out.println("Informe a Sinopse do Filme");
+          filmeToUpdate.setSinopse(inputUpdate.nextLine());
+
+        if (filmeToUpdate != null) {
+          filmeRepo.atualizarFilme(filmeToUpdate);
+        }
+      } else {
+
+      }
+
+      inputUpdate.close();
+
+      return true;
+
+    } catch (Exception e) {
+      return false;
+    }
+
+  }
+
+  public boolean removerFilme() {
+    try {
+      Scanner ScDelete = new Scanner(System.in);
+      System.out.println("Digite o nom do Filme que irá remover");
+      String titleToRemove = ScDelete.nextLine();
+
+      Filme filmeToRemove = filmeRepo.obterFilme(titleToRemove);
+
+      if (filmeToRemove != null) {
+        filmeRepo.removerFilmeNome(titleToRemove);
+      } else {
+
+      }
+
+      ScDelete.close();
+      return true;
+
+    } catch (Exception e) {
+      System.out.println("Erro ao remover cliente: " + e.getMessage());
+      return false;
+    }
+  }
+
+  public boolean listarPorGenero() throws SQLException {
+    for (Filme filme : this.filmeRepo.listarFilmesPorGenero()) {
+      System.out.println(filme);
+    }
+    return false;
+  }
+
+}

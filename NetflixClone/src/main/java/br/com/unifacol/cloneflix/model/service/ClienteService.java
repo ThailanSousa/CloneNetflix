@@ -119,7 +119,7 @@ public class ClienteService {
     return false;
   }
 
-public boolean listarPorCpf(String cpf) throws SQLException {
+  public boolean listarPorCpf(String cpf) throws SQLException {
     if (cpf == null) {
         System.out.println("CPF não pode ser nulo.");
         return false;

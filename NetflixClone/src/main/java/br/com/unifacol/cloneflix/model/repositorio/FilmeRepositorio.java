@@ -47,7 +47,7 @@ public class FilmeRepositorio implements IFilmeMSQL {
     }
   }
 
-    public boolean atualizarFIlme(Filme filme) {
+    public boolean atualizarFilme(Filme filme) {
     try {
       String sql = "UPDATE filme " +
           "SET `titulo`= ?, `diretor` = ?, `duracaoMinutos` = ?, `anoLancamento` = ?, `genero` = ?, `sinopse` = ?, `disponivelParaAssistir` = ? " +
