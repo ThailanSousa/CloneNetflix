@@ -1,48 +1,38 @@
 package br.com.unifacol.cloneflix.model.repositorio;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import br.com.unifacol.cloneflix.model.Interface.IFuncionarioMSQL;
 import br.com.unifacol.cloneflix.model.entities.Funcionario;
-import br.com.unifacol.cloneflix.util.ConnectionSingleton;
+
 
 public class FuncionarioRepositorio implements IFuncionarioMSQL  {
 
-  private Connection conn = null;
+  private EntityManagerFactory emf;
 
-  public FuncionarioRepositorio() {
-    try {
-      this.conn = ConnectionSingleton.getInstance().conexao;
-    } catch (Exception e) {
-      // Trate a exceção de alguma forma apropriada, como registrar ou lançar
-      // novamente.
-      e.printStackTrace();
-    }
+  public void funcionarioRepository() {
+        emf = Persistence.createEntityManagerFactory("cloneflix");
+    };
+
+
+  public List<Funcionario> listarFuncionario() {
+    EntityManager em = emf.createEntityManager();
+    List<Funcionario> funcionario = em.createQuery("SELECT e FROM funcionario e", Funcionario.class).getResultList();
+    em.close();
+    return funcionario;
   }
 
   public boolean cadastrarFuncionario(Funcionario funcionario) {
     try {
-      String sql = "INSERT INTO funcionario " +
-          "('name','agedata','cpf','email','password','phone','profile','maticula')" +
-          "VALUES(?,?,?,?,?,?,?,?)";
-
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, funcionario.getName());
-      ps.setInt(2, funcionario.getAge());
-      ps.setString(3, funcionario.getCpf());
-      ps.setString(4, funcionario.getEmail());
-      ps.setString(5, funcionario.getPassword());// senha
-      ps.setString(6, funcionario.getPhone());
-      ps.setInt(7, funcionario.getTipoDeFuncionario());
-      ps.setInt(8, funcionario.getMatricula());
-
-      ps.executeUpdate();
-      System.out.println("Funcionario Cadastrado no Repositorio");
-      ;
-
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(funcionario);
+        em.getTransaction().commit();
+        em.close();
       return true;
     } catch (Exception e) {
       System.out.println(e);
@@ -54,6 +44,11 @@ public class FuncionarioRepositorio implements IFuncionarioMSQL  {
 
   public boolean atualizarFuncionario(Funcionario funcionario) {
     try {
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.merge(funcionario);
+        em.getTransaction().commit();
+        em.close();
 
       return true;
     } catch (Exception e) {
@@ -63,45 +58,29 @@ public class FuncionarioRepositorio implements IFuncionarioMSQL  {
   }
 
   public Funcionario obterFuncionarioCpf(String cpf) {
+    Funcionario funcionario;
     try {
-      String sql = "SELECT * FROM funcionario WHERE `cpf` = ?";
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, cpf);
-
-      ResultSet rs = ps.executeQuery();
-
-      if (rs.next()) {
-        Funcionario funcionario = new Funcionario(sql, cpf, 0, 0, sql);
-        funcionario.setName(rs.getString("name"));
-        funcionario.setAge(rs.getInt("agedate"));
-        funcionario.setCpf(rs.getString("cpf"));
-        funcionario.setEmail(rs.getString("email"));
-        funcionario.setPhone(rs.getString("phone"));
-        return funcionario;
-      } else {
-        System.out.println("Cliente não encontrado para o CPF: " + cpf);
-        return null;
-      }
+      EntityManager em = emf.createEntityManager();
+      funcionario = em.find(Funcionario.class, cpf);
     } catch (Exception e) {
+      
       System.out.println("Erro: " + e);
       return null;
     }
+    return funcionario;
   }
 
   public void removerFuncionarioForCpf(String cpf) {
     try {
-      String sql = "DELETE FROM funcionario WHERE `cpf` = ?";
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, cpf);
-
-      int rowsDeleted = ps.executeUpdate();
-
-      if (rowsDeleted > 0) {
-        System.out.println("Funcionario com CPF " + cpf + " removido com sucesso!");
-      } else {
-        System.out.println("Nenhum funcionario foi removido. Verifique o CPF.");
-      }
-    } catch (SQLException e) {
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Funcionario funcionario = em.find(Funcionario.class, cpf);
+        if (funcionario != null) {
+            em.remove(funcionario);
+        }
+        em.getTransaction().commit();
+        em.close();
+    } catch (Exception e) {
       System.out.println("Erro: " + e);
     }
   }

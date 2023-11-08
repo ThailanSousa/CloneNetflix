@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import br.com.unifacol.cloneflix.enums.Message;
 import br.com.unifacol.cloneflix.model.Interface.IAssinaturaMSQL;
 import br.com.unifacol.cloneflix.model.entities.Assinatura;
+import br.com.unifacol.cloneflix.model.enums.Message;
 import br.com.unifacol.cloneflix.util.ConnectionSingleton;
 
-public class AssinaturaRepositorio implements IAssinaturaMSQL {
+public class AssinaturaRepositorio  {
 
   private Connection conn = null;
 

@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import br.com.unifacol.cloneflix.enums.Message;
 import br.com.unifacol.cloneflix.model.Interface.IClienteMSQL;
 import br.com.unifacol.cloneflix.model.entities.Cliente;
+import br.com.unifacol.cloneflix.model.enums.Message;
 import br.com.unifacol.cloneflix.util.ConnectionSingleton;
 
 public class ClienteRepositorio implements IClienteMSQL {

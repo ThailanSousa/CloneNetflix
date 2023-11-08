@@ -2,7 +2,7 @@ package br.com.unifacol.cloneflix.model.service;
 
 import java.util.Scanner;
 
-import br.com.unifacol.cloneflix.model.Interface.IFuncionarioMSQL;
+
 import br.com.unifacol.cloneflix.model.entities.Funcionario;
 import br.com.unifacol.cloneflix.model.repositorio.FuncionarioRepositorio;
 

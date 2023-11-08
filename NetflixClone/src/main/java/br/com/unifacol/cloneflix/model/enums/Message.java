@@ -1,4 +1,4 @@
-package br.com.unifacol.cloneflix.enums;
+package br.com.unifacol.cloneflix.model.enums;
 
 public enum Message {
   MODELOCPF("O padrão do CPF é: XXXXXXXXXXX"),

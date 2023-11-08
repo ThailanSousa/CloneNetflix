@@ -1,6 +1,16 @@
 package br.com.unifacol.cloneflix.model.entities;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
 
+
+@Entity
+@Table(name="assinatura")
 public class Assinatura {
+    @Id
+    @Column(name = "id")
+    private int id;
     private String nomeAssinatura;
     private double precoMensal;
     private int duracaoMeses;

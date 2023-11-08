@@ -1,9 +1,17 @@
 package br.com.unifacol.cloneflix.model.entities;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
 
+@Entity
+@Table(name= "funcionario")
 public class Funcionario extends Pessoa {
-  int matricula = 0;
-  int tipoDeFuncionario = 0;
-  String password;
+  @Id
+  @Column(name = "id")
+  private int matricula = 0;
+  private int tipoDeFuncionario = 0;
+  private String password;
 
 
 

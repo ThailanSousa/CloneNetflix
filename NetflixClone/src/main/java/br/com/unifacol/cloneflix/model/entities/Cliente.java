@@ -1,9 +1,17 @@
 package br.com.unifacol.cloneflix.model.entities;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
 
 import java.sql.Timestamp;
 
-
+@Entity
+@Table(name = "cliente")
 public class Cliente extends Pessoa {
+    @Id
+    @Column( name= "id")
+	private int idCliente;
     private String password;
     private Timestamp dataDeCadastro;
     

@@ -12,7 +12,6 @@ public class app {
 
     public static void main(String[] args) throws SQLException {
         ClienteService clienteService = new ClienteService();
-        FuncionarioService funcionarioService = new FuncionarioService();
 
         Scanner scanner = new Scanner(System.in);
 

@@ -11,7 +11,7 @@ import br.com.unifacol.cloneflix.model.repositorio.AssinaturaRepositorio;
 
 public class AssinaturaService {
     AssinaturaRepositorio assinaturaRepo = new AssinaturaRepositorio();
-
+    
     public boolean cadastarAssinatura(){
         Scanner inputAss = new Scanner(System.in);
         Assinatura assinatura = new Assinatura();

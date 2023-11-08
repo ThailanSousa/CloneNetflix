@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-import br.com.unifacol.cloneflix.enums.Message;
 import br.com.unifacol.cloneflix.model.entities.Cliente;
+import br.com.unifacol.cloneflix.model.enums.Message;
 import br.com.unifacol.cloneflix.model.repositorio.ClienteRepositorio;
 
 public class ClienteService {

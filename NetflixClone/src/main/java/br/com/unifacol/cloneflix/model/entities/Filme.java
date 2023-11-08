@@ -1,7 +1,17 @@
 package br.com.unifacol.cloneflix.model.entities;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name = "filme")
 public class Filme {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long idFilme;
     private String titulo;
     private String diretor;
     private int duracaoMinutos;
