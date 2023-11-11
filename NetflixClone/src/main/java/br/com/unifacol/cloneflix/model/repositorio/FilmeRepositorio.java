@@ -1,45 +1,49 @@
 package br.com.unifacol.cloneflix.model.repositorio;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import br.com.unifacol.cloneflix.model.Interface.IFilmeMSQL;
+
 import br.com.unifacol.cloneflix.model.entities.Filme;
-import br.com.unifacol.cloneflix.util.ConnectionSingleton;
+
+
 
 public class FilmeRepositorio implements IFilmeMSQL {
-  private Connection conn;
+  private EntityManagerFactory emf;
+
 
   public FilmeRepositorio() {
-    try {
-      this.conn = ConnectionSingleton.getInstance().conexao;
-    } catch (Exception e) {
-      System.out.println("erro: " + e);
-    }
-  
+    emf = Persistence.createEntityManagerFactory("cloneflix");
   }
 
   public boolean cadastrarFilme(Filme filme) {
-
     try {
-      String sql = "INSERT INTO  filme"
-          + "(`titulo`,`diretor`,`duracao`,`lancamento`,`genero`,`sinopse`,`disponivel`)"
-          + "VALUES(?,?,?,?,?,?,?)";
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(filme);
+        em.getTransaction().commit();
+        em.close();
+      return true;
+    } catch (Exception e) {
+      System.out.println(e);
+      System.out.println("Erro ao Cadastrar o filme");
+      return false;
+    }
+  }
 
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, filme.getTitulo());
-      ps.setString(2, filme.getDiretor());
-      ps.setInt(3, filme.getDuracaoMinutos());
-      ps.setInt(4, filme.getAnoLancamento());
-      ps.setString(5, filme.getGenero());
-      ps.setString(6, filme.getSinopse());
-      ps.setInt(7, filme.getDisponivelParaAssistir());
-      ps.executeUpdate();
-      System.out.println("Cliente Cadastrado com SUCESSO!");
+  public boolean atualizarFilme(Filme filme) {
+    try {
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.merge(filme);
+        em.getTransaction().commit();
+        em.close();
+
       return true;
     } catch (Exception e) {
       System.out.println(e);
@@ -47,97 +51,40 @@ public class FilmeRepositorio implements IFilmeMSQL {
     }
   }
 
-    public boolean atualizarFilme(Filme filme) {
-    try {
-      String sql = "UPDATE filme " +
-          "SET `titulo`= ?, `diretor` = ?, `duracaoMinutos` = ?, `anoLancamento` = ?, `genero` = ?, `sinopse` = ?, `disponivelParaAssistir` = ? " +
-          "WHERE `titulo` = ?";
-
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, filme.getTitulo());
-      ps.setString(2, filme.getDiretor());
-      ps.setInt(3, filme.getDuracaoMinutos());
-      ps.setInt(4, filme.getAnoLancamento());
-      ps.setString(5,filme.getGenero());
-      ps.setString(6,filme.getSinopse());
-      ps.setInt(6, filme.getDisponivelParaAssistir() );
-      
-
-      int rowsUpdated = ps.executeUpdate();
-
-      if (rowsUpdated > 0) {
-        System.out.println("Cliente atualizado com sucesso!");
-        return true;
-      } else {
-        System.out.println("Nenhum cliente foi atualizado. Verifique o CPF.");
-        return false;
-      }
-    } catch (Exception e) {
-      System.out.println("Erro: " + e);
-      return false;
-    }
-  }
-
   public Filme obterFilme(String genero) {
+    Filme filme;
     try {
-      String sql = "SELECT * FROM filme WHERE `genero` = ?";
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, genero);
-
-      ResultSet rs = ps.executeQuery();
-
-      if (rs.next()) {
-        Filme filme = new Filme(sql, sql, 0, 0, sql, sql, 0);
-      ps.setString(1, filme.getTitulo());
-      ps.setString(2, filme.getDiretor());
-      ps.setInt(3, filme.getDuracaoMinutos());
-      ps.setInt(4, filme.getAnoLancamento());
-      ps.setString(5,filme.getGenero());
-      ps.setString(6,filme.getSinopse());
-      ps.setInt(6, filme.getDisponivelParaAssistir() );
-        return filme;
-      } else {
-        System.out.println("Genero selecionado não existe: " + genero);
-        return null;
-      }
+      EntityManager em = emf.createEntityManager();
+      filme = em.find(Filme.class, genero);
     } catch (Exception e) {
+      
       System.out.println("Erro: " + e);
       return null;
     }
+    return filme;
   }
 
 
-  public Stack<Filme> listarFilmesPorGenero() throws SQLException {
-    String sql = "SELECT * FROM filme;";
-    PreparedStatement ps = conn.prepareStatement(sql);
-
-    ResultSet rs = ps.executeQuery();
-
-    Stack<Filme> clientes = new Stack<>();
-    while (rs.next()) {
-        Filme filme = new Filme(sql, sql, 0, 0, sql, sql, 0);
-        filme.setTitulo(rs.getString("Titulo"));
-        filme.setSinopse(rs.getString("sinopse"));
-        filme.setAnoLancamento(rs.getInt("ano_lancamento"));
-        filme.setGenero(rs.getString("Genero"));
-    }
-    return clientes;
+  public Stack<Filme> listarFilmesPorGenero()  {
+    
+    EntityManager em = emf.createEntityManager();
+    List<Filme> filme = em.createQuery("SELECT e FROM filme e", Filme.class).getResultList();
+    em.close();
+    return (Stack<Filme>) filme;
+  
 };
 
   public void removerFilmeNome(String titulo) {
     try {
-      String sql = "DELETE FROM filme WHERE `titulo` = ?";
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, titulo);
-
-      int rowsDeleted = ps.executeUpdate();
-
-      if (rowsDeleted > 0) {
-        System.out.println("O" + titulo + "Foi removido com Sucesso");
-      } else {
-        System.out.println("Nenhum titulo foi encontrado");
-      }
-    } catch (SQLException e) {
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Filme filme = em.find(Filme.class, titulo);
+        if (filme != null) {
+            em.remove(filme);
+        }
+        em.getTransaction().commit();
+        em.close();
+    } catch (Exception e) {
       System.out.println("Erro: " + e);
     }
   }

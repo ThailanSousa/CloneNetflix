@@ -113,7 +113,7 @@ public class ClienteService {
   }
 
   public boolean listarTodos() throws SQLException {
-    for (Cliente cliente : this.clienteRepo.listarTodos()) {
+    for (Cliente cliente : this.clienteRepo.listarClientes()) {
       System.out.println(cliente);
     }
     return false;

@@ -1,115 +1,87 @@
 package br.com.unifacol.cloneflix.model.repositorio;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import br.com.unifacol.cloneflix.model.Interface.IAssinaturaMSQL;
-import br.com.unifacol.cloneflix.model.entities.Assinatura;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
 import br.com.unifacol.cloneflix.model.enums.Message;
-import br.com.unifacol.cloneflix.util.ConnectionSingleton;
+import br.com.unifacol.cloneflix.model.entities.Assinatura;
+
 
 public class AssinaturaRepositorio  {
 
-  private Connection conn = null;
+  private EntityManagerFactory emf;
 
   public AssinaturaRepositorio() {
-    try {
-      this.conn = ConnectionSingleton.getInstance().conexao;
-    } catch (Exception e) {
-      // Lidar com exceção, se necessário
-    }
+    emf = Persistence.createEntityManagerFactory("cloneflix");
+  }
+
+  public List<Assinatura> listarAssinatura() {
+    EntityManager em = emf.createEntityManager();
+    List<Assinatura> assinatura = em.createQuery("SELECT e FROM assinatura e", Assinatura.class).getResultList();
+    em.close();
+    return assinatura;
   }
 
   public boolean cadastrarAssinatura(Assinatura assinatura) {
     try {
-      String sql = "INSERT INTO assinatura" +
-          "(`nomeAssinatura`, `precoMensal`, `duracaoMeses`, `ativa`)" +
-          "VALUES (?, ?, ?, ?)";
-
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, assinatura.getNomeAssinatura());
-      ps.setDouble(2, assinatura.getPrecoMensal());
-      ps.setInt(3, assinatura.getDuracaoMeses());
-      ps.setBoolean(4, assinatura.isAtiva());
-
-      ps.executeUpdate();
-
-      System.out.println(Message.SUCESSO);
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(assinatura);
+        em.getTransaction().commit();
+        em.close();
       return true;
     } catch (Exception e) {
-      System.out.println("Erro: " + e);
+      System.out.println(e);
+      System.out.println();
       return false;
     }
-  }
+    
+    }
+  
 
   public boolean atualizarAssinatura(Assinatura assinatura) {
     try {
-      String sql = "UPDATE assinatura " +
-          "SET `nomeAssinatura` = ?, `precoMensal` = ?, `duracaoMeses` = ?, `ativa` = ? " +
-          "WHERE `cpf` = ?";
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.merge(assinatura);
+        em.getTransaction().commit();
+        em.close();
 
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, assinatura.getNomeAssinatura());
-      ps.setDouble(2, assinatura.getPrecoMensal());
-      ps.setInt(3, assinatura.getDuracaoMeses());
-      ps.setBoolean(4, assinatura.isAtiva());
-
-      int rowsUpdated = ps.executeUpdate();
-
-      if (rowsUpdated > 0) {
-        System.out.println(Message.SUCESSO);
-        return true;
-      } else {
-        System.out.println("Nenhuma Assinatura foi atualizado. Verifique o nome da assinatura.");
-        return false;
-      }
+      return true;
     } catch (Exception e) {
-      System.out.println("Erro: " + e);
+      System.out.println(e);
       return false;
     }
   }
 
   public Assinatura obterAssinaturaPorNomeAssinatura(String nomeAssinatura) {
+    Assinatura assinatura;
     try {
-      String sql = "SELECT * FROM assinatura WHERE `nomeAssinatura` = ? ";
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, nomeAssinatura);
-
-      ResultSet rs = ps.executeQuery();
-
-      if (rs.next()) {
-        Assinatura assinatura = new Assinatura();
-        assinatura.setNomeAssinatura(rs.getString("nomeAssinatura"));
-        assinatura.setPrecoMensal(rs.getDouble("precoMensal"));
-        assinatura.setDuracaoMeses(rs.getInt("duracaoMeses"));
-        assinatura.setAtiva(rs.getBoolean("ativa"));
-        return assinatura;
-      } else {
-        System.out.println("Assinatura não encontrado para o nome: " + nomeAssinatura);
-        return null;
-      }
+      EntityManager em = emf.createEntityManager();
+      assinatura = em.find(Assinatura.class, nomeAssinatura);
     } catch (Exception e) {
-      System.out.println("Erro: " + e);
+      
+      System.out.println(Message.ERRO);
       return null;
     }
+    return assinatura;
   }
 
-  public void removerAssinatura(String nome) {
+  public void removerAssinatura(String nomeAssinatura) {
     try {
-      String sql = "DELETE FROM assinatura WHERE `nomeAssinatura` = ?";
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, nome);
-
-      int rowsDeleted = ps.executeUpdate();
-
-      if (rowsDeleted > 0) {
-        System.out.println("Assinatura" + nome + "Foi removido com Sucesso");
-      } else {
-        System.out.println("Nenhuma Assinatura foi encontrado");
-      }
-    } catch (SQLException e) {
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Assinatura assinatura = em.find(Assinatura.class, nomeAssinatura);
+        if (assinatura != null) {
+            em.remove(assinatura);
+        }
+        em.getTransaction().commit();
+        em.close();
+    } catch (Exception e) {
       System.out.println("Erro: " + e);
     }
   }

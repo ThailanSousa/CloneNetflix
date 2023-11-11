@@ -1,171 +1,100 @@
 package br.com.unifacol.cloneflix.model.repositorio;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import br.com.unifacol.cloneflix.model.Interface.IClienteMSQL;
 import br.com.unifacol.cloneflix.model.entities.Cliente;
-import br.com.unifacol.cloneflix.model.enums.Message;
-import br.com.unifacol.cloneflix.util.ConnectionSingleton;
+
 
 public class ClienteRepositorio implements IClienteMSQL {
 
-  private Connection conn;
+  private EntityManagerFactory emf;
 
   public ClienteRepositorio() {
-    try {
-      this.conn = ConnectionSingleton.getInstance().conexao;
-    } catch (Exception e) {
-      System.out.println("cliente repoitorio" + e);
-      e.printStackTrace();
-    }
+    emf = Persistence.createEntityManagerFactory("cloneflix");
   }
+
+  public Stack<Cliente> listarClientes() {
+    EntityManager em = emf.createEntityManager();
+    List<Cliente> cliente = em.createQuery("SELECT e FROM cliente e", Cliente.class).getResultList();
+    em.close();
+    return (Stack<Cliente>) cliente;
+  }
+  
+
 
   public boolean cadastrarCliente(Cliente cliente) {
     try {
-      String sql = "INSERT INTO cliente " +
-          "(`name`,`agedate`,`cpf`,`email`,`password`,`phone`,`dataDeCadatros`)" +
-          "VALUES(?,?,?,?,?,?,NOW())";
-
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, cliente.getName());
-      ps.setInt(2, cliente.getAge());
-      ps.setString(3, cliente.getCpf());
-      ps.setString(4, cliente.getEmail());
-      ps.setString(5, cliente.getPassword());
-      ps.setString(6, cliente.getPhone());
-
-      ps.executeUpdate();
-      System.out.println("Cliente Cadastrado Repositorio");
-
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(cliente);
+        em.getTransaction().commit();
+        em.close();
       return true;
-    } catch (SQLException e) {
-      System.out.println("Erro: " + e);
+    } catch (Exception e) {
+      System.out.println(e);
+      System.out.println("Erro ao Cadastrar o cliente");
       return false;
     }
   }
 
   public boolean atualizarCliente(Cliente cliente) {
     try {
-      String sql = "UPDATE cliente " +
-          "SET `name`= ?, `agedate` = ?, `email` = ?, `phone` = ? " +
-          "WHERE `cpf` = ?";
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.merge(cliente);
+        em.getTransaction().commit();
+        em.close();
 
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, cliente.getName());
-      ps.setInt(2, cliente.getAge());
-      ps.setString(3, cliente.getEmail());
-      ps.setString(4, cliente.getPhone());
-      ps.setString(5, cliente.getCpf());
-
-      int rowsUpdated = ps.executeUpdate();
-
-      if (rowsUpdated > 0) {
-        System.out.println(Message.ALTERACAO);
-        return true;
-      } else {
-        System.out.println("Nenhum cliente foi atualizado. Verifique o CPF.");
-        return false;
-      }
+      return true;
     } catch (Exception e) {
-      System.out.println("Erro: " + e);
+      System.out.println(e);
       return false;
     }
+    
   }
 
   public Cliente obterClientePorCPF(String cpf) {
-
+    Cliente cliente;
     try {
-      String sql = "SELECT * FROM cliente WHERE `cpf` = ?";
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, cpf);
-
-      ResultSet rs = ps.executeQuery();
-
-      if (rs.next()) {
-        Cliente cliente = new Cliente(null, null);
-        cliente.setName(rs.getString("name"));
-        cliente.setAge(rs.getInt("agedate"));
-        cliente.setCpf(rs.getString("cpf"));
-        cliente.setEmail(rs.getString("email"));
-        cliente.setPhone(rs.getString("phone"));
-        return cliente;
-      } else {
-        System.out.println(Message.INVALIDO + cpf);
-        return null;
-      }
+      EntityManager em = emf.createEntityManager();
+      cliente = em.find(Cliente.class, cpf);
     } catch (Exception e) {
+      
       System.out.println("Erro: " + e);
       return null;
     }
+    return cliente;
   }
 
   public void removerClienteForCpf(String cpf) {
     try {
-      String sql = "DELETE FROM cliente WHERE `cpf` = ?";
-      PreparedStatement ps = conn.prepareStatement(sql);
-      ps.setString(1, cpf);
-
-      int rowsDeleted = ps.executeUpdate();
-
-      if (rowsDeleted > 0) {
-        System.out.println("Cliente com CPF " + cpf + " removido com sucesso!");
-      } else {
-        System.out.println("Nenhum cliente foi removido. Verifique o CPF.");
-      }
-    } catch (SQLException e) {
+      EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Cliente cliente = em.find(Cliente.class, cpf);
+        if (cliente != null) {
+            em.remove(cliente);
+        }
+        em.getTransaction().commit();
+        em.close();
+    } catch (Exception e) {
       System.out.println("Erro: " + e);
     }
   }
 
-  @Override
-  public Stack<Cliente> listarTodos() throws SQLException {
-    String sql = "SELECT * FROM cliente;";
-    PreparedStatement ps = conn.prepareStatement(sql);
-
-    ResultSet rs = ps.executeQuery();
-
-    Stack<Cliente> clientes = new Stack<>();
-    while (rs.next()) {
-        Cliente cliente = new Cliente(sql, sql);
-        cliente.setName(rs.getString("name"));
-        cliente.setAge(rs.getInt("agedate"));
-        cliente.setCpf(rs.getString("cpf"));
-        cliente.setEmail(rs.getString("email"));
-        cliente.setPhone(rs.getString("phone"));
-        clientes.push(cliente);
-    }
-    return clientes;
-}
-
-  public  ArrayList<Cliente> listarPorCpf(String cpf)  throws SQLException {
-
-    String sql = "SELECT * FROM cliente WHERE cpf = ?";
-    PreparedStatement ps = conn.prepareStatement(sql);
-    ps.setString(1, cpf);
-
-    ResultSet rs = ps.executeQuery();
-
-    ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-    while (rs.next()) {
-
-      Cliente cliente = new Cliente(null, null);
-      cliente.setName(rs.getString("name"));
-      cliente.setAge(rs.getInt("agedate"));
-      cliente.setCpf(rs.getString("cpf"));
-      cliente.setEmail(rs.getString("email"));
-      cliente.setPhone(rs.getString("phone"));
-
-      clientes.add(cliente);
-
-    }
-    return clientes;
-
+  public List<Cliente> listarPorCpf(String cpf) {
+    EntityManager em = emf.createEntityManager();
+    List<Cliente> cliente = em.createQuery("SELECT * FROM cliente WHERE cpf = "+cpf, Cliente.class).getResultList();
+    em.close();
+    return cliente;
   }
+
+
 
 }
 

@@ -1,7 +1,6 @@
 package br.com.unifacol.cloneflix.model.service;
 
-import java.sql.SQLException;
-import java.util.List;
+
 import java.util.Scanner;
 
 
@@ -16,7 +15,7 @@ public class AssinaturaService {
         Scanner inputAss = new Scanner(System.in);
         Assinatura assinatura = new Assinatura();
 
-        Assinatura assintaura = new Assinatura(null, 0, 0);
+
 
         System.out.print("Qual o Plano de escolha?");
         assinatura.setNomeAssinatura(inputAss.nextLine());

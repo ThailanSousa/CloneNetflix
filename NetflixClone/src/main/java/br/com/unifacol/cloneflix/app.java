@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 
 import br.com.unifacol.cloneflix.model.service.ClienteService;
-import br.com.unifacol.cloneflix.model.service.FuncionarioService;
+
 
 public class app {
 
