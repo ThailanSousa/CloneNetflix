@@ -3,9 +3,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
     <persistence-unit name="cloneflix" transaction-type="RESOURCE_LOCAL">
-        <class>com.example.MinhaEntidade</class>
+
+        <!-- Mapeamento de classes -->
+        <class>br.com.unifacol.cloneflix.model.entities.Assinatura</class>
+        <class>br.com.unifacol.cloneflix.model.entities.Funcionario</class>
+        <class>br.com.unifacol.cloneflix.model.entities.Cliente</class>
+        <class>br.com.unifacol.cloneflix.model.entities.Filme</class>
+
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cloneflix?useTimezone=true&serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cloneflix?serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="95399788"/>
@@ -16,11 +22,7 @@
             <property name="hibernate.hbm2ddl.auto" value="update" /> <!-- Atualiza o esquema do banco automaticamente -->
         </properties>
 
-        <!-- Mapeamento de classes -->
-        <class>com.unifacol.cloneflix.model.entities.Assinatura</class>
-        <class>com.unifacol.cloneflix.model.entities.Funcionario</class>
-        <class>com.unifacol.cloneflix.model.entities.Cliente</class>
-        <class>com.unifacol.cloneflix.model.entities.Filme</class>
+        
 
     </persistence-unit>
 </persistence>

@@ -4,7 +4,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 
-import java.sql.Timestamp;
+
 
 @Entity
 @Table(name = "cliente")
@@ -13,7 +13,7 @@ public class Cliente extends Pessoa {
     @Column( name= "id")
 	private int idCliente;
     private String password;
-    private Timestamp dataDeCadastro;
+
     
 
     public Cliente(String name, String cpf) {
@@ -23,14 +23,6 @@ public class Cliente extends Pessoa {
     public Cliente(String name, int age, String cpf, String email, String phone, String password) {
         super(name, age, cpf, email, phone);
         this.password = password;
-    }
-
-    public Timestamp getDataDeCadastro() {
-        return dataDeCadastro;
-    }
-
-    public void setDataDeCadastro(Timestamp dataDeCadastro) {
-        this.dataDeCadastro = dataDeCadastro;
     }
 
     public String getPassword() {
