@@ -13,7 +13,8 @@
 
         <!-- Mapeamento de classes -->
         <!-- Adicione aqui os caminhos completos das suas classes de modelo -->
-        <mapping class="com.cloneflix.model.Pessoa"/>
+        <mapping class="com.cloneflix.model.Cliente"/>
+        <mapping class="com.cloneflix.model.Funcionario"/>
         
         <!-- Adicione mais conforme necessário -->
 
