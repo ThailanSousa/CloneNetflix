@@ -21,11 +21,15 @@ public class Cliente {
     private String cpf;
     private String email;
     private String phone;
+    private int pacote;
 
     public Cliente() {
     }
 
-    public Cliente(String username, String password, String name, int age, String cpf, String email, String phone) {
+    
+
+    public Cliente(String username, String password, String name, int age, String cpf, String email,
+            String phone) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -34,6 +38,8 @@ public class Cliente {
         this.email = email;
         this.phone = phone;
     }
+
+
 
     public Long getId() {
         return id;
