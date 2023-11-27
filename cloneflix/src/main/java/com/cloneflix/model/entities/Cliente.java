@@ -1,9 +1,13 @@
 package com.cloneflix.model.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,11 +26,11 @@ public class Cliente {
     private String email;
     private String phone;
     private int pacote;
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Assinatura> assinaturas;
 
     public Cliente() {
     }
-
-    
 
     public Cliente(String username, String password, String name, int age, String cpf, String email,
             String phone) {
@@ -38,8 +42,6 @@ public class Cliente {
         this.email = email;
         this.phone = phone;
     }
-
-
 
     public Long getId() {
         return id;
@@ -105,10 +107,18 @@ public class Cliente {
         this.phone = phone;
     }
 
+    public int getPacote() {
+        return pacote;
+    }
+
+    public void setPacote(int pacote) {
+        this.pacote = pacote;
+    }
+
     @Override
     public String toString() {
         return "Cliente [id=" + id + ", username=" + username + ", name=" + name + ", age=" + age + ", cpf=" + cpf +
                 ", email=" + email + ", phone=" + phone + "]";
     }
-}
 
+}

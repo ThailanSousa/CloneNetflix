@@ -3,7 +3,6 @@ package com.cloneflix;
 import java.util.Scanner;
 
 import com.cloneflix.model.entities.Cliente;
-import com.cloneflix.model.entities.Funcionario;
 import com.cloneflix.service.ClienteService;
 import com.cloneflix.service.FuncionarioService;
 
@@ -23,12 +22,10 @@ public class App {
         do {
             System.out.println("Escolha uma opção:");
             System.out.println("1. Fazer Login ");
-            System.out.println("2.  Criar conta");
-            // System.out.println("9. Autenticar Funcionário");
-            System.out.println("0. Sair");
+            System.out.println("2. Criar Conta");
+            System.out.println("3. Sair");
 
-            escolha = scanner.nextInt();
-            scanner.nextLine(); // Consumir a quebra de linha
+            escolha = obterEscolhaValida(scanner);
 
             switch (escolha) {
                 case 1:
@@ -42,110 +39,14 @@ public class App {
 
                     if (clienteAutenticado != null) {
                         System.out.println("Cliente autenticado com sucesso: ");// + clienteAutenticado
-
-                        // Menu do Cliente após a autenticação
-                        int opcaoCliente;
-
-                        do {
-                            System.out.println("Menu do Cliente:");
-                            System.out.println("1. Opção 1");
-                            System.out.println("2. Opção 2");
-                            System.out.println("3. Opção 3");
-                            System.out.println("4. Sair");
-
-                            opcaoCliente = scanner.nextInt();
-                            scanner.nextLine(); // Consumir a quebra de linha
-
-                            switch (opcaoCliente) {
-                                case 1:
-                                    System.out.println("Executando a Opção 1 para o Cliente.");
-                                    break;
-
-                                case 2:
-                                    System.out.println("Executando a Opção 2 para o Cliente.");
-                                    break;
-
-                                case 3:
-                                    System.out.println("Executando a Opção 3 para o Cliente.");
-                                    break;
-
-                                case 4:
-                                    System.out.println("Saindo do menu do Cliente.");
-                                    break;
-
-                                default:
-                                    System.out.println("Opção inválida. Tente novamente.");
-                            }
-
-                        } while (opcaoCliente != 4);
-
+                        exibirMenuCliente(scanner, clienteService, clienteAutenticado);
                     } else {
                         System.out.println("Falha na autenticação do cliente.");
                     }
                     break;
 
-                    case 2:
-                    clienteService.cadastrarCliente();
-                    break;
-                case 9:
-
-                    // Autenticação do funcionario
-                    System.out.print("Digite a senha do administrador: ");
-                    String senhaDigitada = scanner.nextLine();
-
-                    if (senhaAdm.equals(senhaDigitada)) {
-                        System.out.println("Administrador reconhecido. Faça seu login como funcionário.");
-
-                        System.out.print("Digite o nome de usuário do funcionário: ");
-                        String funcionarioUsername = scanner.nextLine();
-                        System.out.print("Digite a senha do funcionário: ");
-                        String funcionarioPassword = scanner.nextLine();
-
-                        Funcionario funcionarioAutenticado = funcionarioService
-                                .autenticarFuncionario(funcionarioUsername, funcionarioPassword);
-
-                        if (funcionarioAutenticado != null) {
-                            System.out.println("Funcionario autenticado com sucesso: ");// + funcionarioAutenticado
-
-                            // Menu do Funcionario após a autenticação
-                            int opcaoFuncionario;
-
-                            do {
-                                System.out.println("Menu do Funcionario:");
-                                System.out.println("1. Opção 1");
-                                System.out.println("2. Opção 2");
-                                System.out.println("3. Opção 3");
-                                System.out.println("4. Sair");
-
-                                opcaoFuncionario = scanner.nextInt();
-                                scanner.nextLine(); // Consumir a quebra de linha
-
-                                switch (opcaoFuncionario) {
-                                    case 1:
-                                        System.out.println("Executando a Opção 1 para o Funcionario.");
-                                        break;
-
-                                    case 2:
-                                        System.out.println("Executando a Opção 2 para o Funcionario.");
-                                        break;
-
-                                    case 3:
-                                        System.out.println("Executando a Opção 3 para o Funcionario.");
-                                        break;
-
-                                    case 4:
-                                        System.out.println("Saindo do menu do Funcionario.");
-                                        break;
-
-                                    default:
-                                        System.out.println("Opção inválida. Tente novamente.");
-                                }
-
-                            } while (opcaoFuncionario != 4);
-                        }
-                    } else {
-                        System.out.println("Falha na autenticação do Funcionario.");
-                    }
+                case 2:
+                    clienteService.cadastrarClienteComPacote();
                     break;
 
                 case 3:
@@ -159,5 +60,63 @@ public class App {
         } while (escolha != 3);
 
         scanner.close();
+    }
+
+    private static int obterEscolhaValida(Scanner scanner) {
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Insira um número válido:");
+            }
+        }
+    }
+
+    private static void exibirMenuCliente(Scanner scanner, ClienteService clienteService, Cliente clienteAutenticado) {
+        int opcaoCliente;
+    
+        do {
+            System.out.println("Menu do Cliente:");
+            System.out.println("1. Exibir Dados");
+            System.out.println("2. Alterar Dados");
+            System.out.println("3. Ver Filmes");
+            System.out.println("4. Sair");
+    
+            opcaoCliente = obterEscolhaValida(scanner);
+    
+            switch (opcaoCliente) {
+                case 1:
+                    // Exibir dados do cliente autenticado
+                    exibirDadosCliente(clienteAutenticado);
+                    break;
+    
+                case 2:
+                clienteService.atualizarCliente();
+                    break;
+    
+                case 3:
+                    System.out.println("Executando a Opção 3 para o Cliente.");
+                    break;
+    
+                case 4:
+                    System.out.println("Saindo do menu do Cliente.");
+                    break;
+    
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+    
+        } while (opcaoCliente != 4);
+    }
+    
+    private static void exibirDadosCliente(Cliente cliente) {
+        System.out.println("Dados do Cliente:");
+        System.out.println("Nome: " + cliente.getName());
+        System.out.println("Idade: " + cliente.getAge());
+        System.out.println("CPF: " + cliente.getCpf());
+        System.out.println("Email: " + cliente.getEmail());
+        System.out.println("Telefone: " + cliente.getPhone());
+        System.out.println("Username: " + cliente.getUsername());
+        System.out.println("Pacote: " + cliente.getPacote());
     }
 }

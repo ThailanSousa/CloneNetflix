@@ -13,7 +13,7 @@ public class ClienteService {
         this.clienteRepository = new ClienteRepository();
     }
 
-    public boolean cadastrarCliente() {
+    public boolean cadastrarClienteComPacote() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Bem-vindo ao cadastro de cliente!");
@@ -22,18 +22,9 @@ public class ClienteService {
         System.out.print("Nome: ");
         String nome = scanner.nextLine();
 
-
-
-
         System.out.print("Idade: ");
         int idade = scanner.nextInt();
-        if(idade < 18){
-            System.out.println("voce não tem permiçã para criar conta");
-            System.out.println("voce deve ter mais de 18 anos");
-        }else{
         scanner.nextLine(); // Limpa o buffer
-        }
-
 
         System.out.print("CPF (11 dígitos): ");
         String cpf = scanner.nextLine();
@@ -45,21 +36,13 @@ public class ClienteService {
         System.out.print("Email: ");
         String email = scanner.nextLine();
 
-
-
         System.out.print("Telefone: ");
         System.out.print("(81)9.:");
         String telefone = scanner.nextLine();
 
-
-
         System.out.print("Nome de usuário (sem caracteres especiais): ");
         String username = scanner.nextLine();
 
-
-
-
-        // Validar o nome de usuário
         while (!username.matches("^[a-zA-Z0-9]*$")) {
             System.out.println("Nome de usuário não pode conter caracteres especiais. Tente novamente:");
             username = scanner.nextLine();
@@ -68,13 +51,28 @@ public class ClienteService {
         System.out.print("Senha (até 20 dígitos): ");
         String senha = scanner.nextLine();
 
-        // Validar a senha
         while (senha.length() > 20) {
             System.out.println("Senha não pode ter mais de 20 dígitos. Tente novamente:");
             senha = scanner.nextLine();
         }
 
+        System.out.println("Escolha o pacote (1=Básico, 2=Normal, 3=Família, 4=Premium): ");
+        int pacote;
+        while (true) {
+            try {
+                pacote = Integer.parseInt(scanner.nextLine());
+                if (pacote >= 1 && pacote <= 4) {
+                    break;
+                } else {
+                    System.out.println("Pacote inválido. Escolha entre 1 e 4:");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Insira um número válido para o pacote:");
+            }
+        }
+
         Cliente novoCliente = new Cliente(username, senha, nome, idade, cpf, email, telefone);
+        novoCliente.setPacote(pacote);
 
         boolean cadastrado = clienteRepository.cadastrarCliente(novoCliente);
 
@@ -86,17 +84,20 @@ public class ClienteService {
         return cadastrado;
     }
 
-    public Cliente consultarCliente(Long id) {
-        return clienteRepository.consultarCliente(id);
+    public int obterPacoteCliente(String cpf) {
+        Cliente cliente = clienteRepository.consultarClientePorCpf(cpf);
+        if (cliente != null) {
+            return cliente.getPacote();
+        } else {
+            System.out.println("Cliente não encontrado.");
+            return -1;
+        }
     }
 
-    public boolean atualizarCliente(Long id, String newPassword, String newEmail, String newPhone) {
-        Cliente cliente = consultarCliente(id);
-
+    public boolean atualizarPacoteCliente(String cpf, int novoPacote) {
+        Cliente cliente = clienteRepository.consultarClientePorCpf(cpf);
         if (cliente != null) {
-            cliente.setPassword(newPassword);
-            cliente.setEmail(newEmail);
-            cliente.setPhone(newPhone);
+            cliente.setPacote(novoPacote);
             return clienteRepository.atualizarCliente(cliente);
         } else {
             System.out.println("Cliente não encontrado.");
@@ -104,9 +105,53 @@ public class ClienteService {
         }
     }
 
-    public boolean deletarCliente(Long id) {
-        return clienteRepository.deletarCliente(id);
+    public Cliente consultarClientePorCpf() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite o CPF do cliente: ");
+        String cpf = scanner.nextLine();
+
+        return clienteRepository.consultarClientePorCpf(cpf);
     }
+
+    public boolean atualizarCliente() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite o CPF do cliente: ");
+        String cpf = scanner.nextLine();
+
+        Cliente cliente = consultarClientePorCpf();
+
+        if (cliente != null) {
+            System.out.print("Nova senha: ");
+            String newPassword = scanner.nextLine();
+
+            System.out.print("Novo email: ");
+            String newEmail = scanner.nextLine();
+
+            System.out.print("Novo telefone: ");
+            String newPhone = scanner.nextLine();
+
+            cliente.setPassword(newPassword);
+            cliente.setEmail(newEmail);
+            cliente.setPhone(newPhone);
+
+            return clienteRepository.atualizarCliente(cliente);
+        } else {
+            System.out.println("Cliente não encontrado.");
+            return false;
+        }
+    }
+
+    public boolean deletarCliente() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite o CPF do cliente: ");
+        String cpf = scanner.nextLine();
+
+        return clienteRepository.deletarCliente(cpf);
+    }
+
     public Cliente autenticarCliente(String username, String password) {
         return clienteRepository.autenticarCliente(username, password);
     }
