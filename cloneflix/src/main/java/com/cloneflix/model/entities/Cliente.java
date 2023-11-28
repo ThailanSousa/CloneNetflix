@@ -1,5 +1,6 @@
 package com.cloneflix.model.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,7 +18,6 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String username;
     private String password;
     private String name;
@@ -25,10 +25,11 @@ public class Cliente {
     private String cpf;
     private String email;
     private String phone;
-    private int pacote;
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<Assinatura> assinaturas;
+    private List<Assinatura> assinaturas = new ArrayList<>();
 
+
+    // Construtor vazio p/ JPA
     public Cliente() {
     }
 
@@ -106,19 +107,17 @@ public class Cliente {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
-    public int getPacote() {
-        return pacote;
-    }
-
-    public void setPacote(int pacote) {
-        this.pacote = pacote;
-    }
-
+    
     @Override
     public String toString() {
         return "Cliente [id=" + id + ", username=" + username + ", name=" + name + ", age=" + age + ", cpf=" + cpf +
                 ", email=" + email + ", phone=" + phone + "]";
+
+    }
+
+    public void adicionarAssinatura(Assinatura assinatura) {
+        assinaturas.add(assinatura);
+        assinatura.setCliente(this);
     }
 
 }

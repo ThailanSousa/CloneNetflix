@@ -16,27 +16,28 @@ public class FuncionarioService {
         return funcionarioRepository.cadastrarFuncionario(novoFuncionario);
     }
 
-    public Funcionario consultarFuncionario(Long id) {
-        return funcionarioRepository.consultarFuncionario(id);
+    public Funcionario consultarFuncionario(String cpf) {
+        return funcionarioRepository.consultarFuncioanrioPorCpf(cpf);
     }
 
-    public boolean atualizarFuncionario(Long id, String newPassword, String newEmail, String newPhone) {
-        Funcionario funcionario = consultarFuncionario(id);
+    public boolean atualizarFuncionario(String cpf, String newPassword, String newEmail, String newPhone) {
+        Funcionario funcionario = consultarFuncionario(cpf);
 
         if (funcionario != null) {
             funcionario.setPassword(newPassword);
             funcionario.setEmail(newEmail);
             funcionario.setPhone(newPhone);
-            return funcionarioRepository.atualizarFuncionario(funcionario);
+            return funcionarioRepository.atualizarFuncioanrio(funcionario);
         } else {
             System.out.println("Funcionário não encontrado.");
             return false;
         }
     }
 
-    public boolean deletarFuncionario(Long id) {
-        return funcionarioRepository.deletarFuncionario(id);
+    public boolean deletarFuncionario(String cpf) {
+        return funcionarioRepository.deletarFuncionario(cpf);
     }
+   
     public Funcionario autenticarFuncionario(String username, String password) {
         return funcionarioRepository.autenticarFuncionario(username, password);
     }

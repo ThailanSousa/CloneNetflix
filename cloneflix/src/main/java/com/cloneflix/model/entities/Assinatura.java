@@ -1,15 +1,15 @@
 package com.cloneflix.model.entities;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "assinatura")
 public class Assinatura {
 
     @Id
@@ -17,37 +17,32 @@ public class Assinatura {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(nullable = false)
     private Cliente cliente;
 
-    private Date dataInicio;
-    private Date dataFim;
-
+    
     private int tipoPacote; // 1 = Básica, 2 = Normal, 3 = Família, 4 = Premium
 
+    
     private String numeroCartao;
+
+    
     private String dataExpiracaoCartao;
+
+    
     private String cvcCartao;
 
+
+
     public Assinatura() {
-        // Construtor padrão
     }
 
-    public Assinatura(Cliente cliente, Date dataInicio, Date dataFim, int tipoPacote, String numeroCartao, String dataExpiracaoCartao, String cvcCartao) {
+    public Assinatura(Cliente cliente, int tipoPacote, String numeroCartao, String dataExpiracaoCartao, String cvcCartao) {
         this.cliente = cliente;
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
         this.tipoPacote = tipoPacote;
         this.numeroCartao = numeroCartao;
         this.dataExpiracaoCartao = dataExpiracaoCartao;
         this.cvcCartao = cvcCartao;
-    }
-
-    // Métodos getters e setters
-
-    @Override
-    public String toString() {
-        return "Assinatura [id=" + id + ", cliente=" + cliente + ", dataInicio=" + dataInicio + ", dataFim=" + dataFim + ", tipoPacote=" + tipoPacote + "]";
     }
 
     public Long getId() {
@@ -64,22 +59,6 @@ public class Assinatura {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public Date getDataInicio() {
-        return dataInicio;
-    }
-
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public Date getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
     }
 
     public int getTipoPacote() {
@@ -113,4 +92,6 @@ public class Assinatura {
     public void setCvcCartao(String cvcCartao) {
         this.cvcCartao = cvcCartao;
     }
+
+    
 }

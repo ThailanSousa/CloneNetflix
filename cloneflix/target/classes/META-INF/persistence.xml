@@ -7,6 +7,8 @@
         <!-- Mapeamento de classes -->
         <class>com.cloneflix.model.entities.Cliente</class>
         <class>com.cloneflix.model.entities.Funcionario</class>
+        <class>com.cloneflix.model.entities.Filme</class>
+        <class>com.cloneflix.model.entities.Assinatura</class>
         
 
         <properties>

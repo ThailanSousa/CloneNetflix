@@ -28,6 +28,7 @@ public class ClienteService {
 
         System.out.print("CPF (11 dígitos): ");
         String cpf = scanner.nextLine();
+
         while (cpf.length() != 11) {
             System.out.println("CPF deve ter 11 dígitos. Tente novamente:");
             cpf = scanner.nextLine();
@@ -56,23 +57,7 @@ public class ClienteService {
             senha = scanner.nextLine();
         }
 
-        System.out.println("Escolha o pacote (1=Básico, 2=Normal, 3=Família, 4=Premium): ");
-        int pacote;
-        while (true) {
-            try {
-                pacote = Integer.parseInt(scanner.nextLine());
-                if (pacote >= 1 && pacote <= 4) {
-                    break;
-                } else {
-                    System.out.println("Pacote inválido. Escolha entre 1 e 4:");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Insira um número válido para o pacote:");
-            }
-        }
-
         Cliente novoCliente = new Cliente(username, senha, nome, idade, cpf, email, telefone);
-        novoCliente.setPacote(pacote);
 
         boolean cadastrado = clienteRepository.cadastrarCliente(novoCliente);
 
@@ -82,27 +67,6 @@ public class ClienteService {
             System.out.println("Falha ao cadastrar o cliente.");
         }
         return cadastrado;
-    }
-
-    public int obterPacoteCliente(String cpf) {
-        Cliente cliente = clienteRepository.consultarClientePorCpf(cpf);
-        if (cliente != null) {
-            return cliente.getPacote();
-        } else {
-            System.out.println("Cliente não encontrado.");
-            return -1;
-        }
-    }
-
-    public boolean atualizarPacoteCliente(String cpf, int novoPacote) {
-        Cliente cliente = clienteRepository.consultarClientePorCpf(cpf);
-        if (cliente != null) {
-            cliente.setPacote(novoPacote);
-            return clienteRepository.atualizarCliente(cliente);
-        } else {
-            System.out.println("Cliente não encontrado.");
-            return false;
-        }
     }
 
     public Cliente consultarClientePorCpf() {
@@ -155,4 +119,5 @@ public class ClienteService {
     public Cliente autenticarCliente(String username, String password) {
         return clienteRepository.autenticarCliente(username, password);
     }
+
 }

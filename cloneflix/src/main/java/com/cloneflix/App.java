@@ -3,7 +3,9 @@ package com.cloneflix;
 import java.util.Scanner;
 
 import com.cloneflix.model.entities.Cliente;
+import com.cloneflix.service.AssinaturaService;
 import com.cloneflix.service.ClienteService;
+import com.cloneflix.service.FilmeService;
 import com.cloneflix.service.FuncionarioService;
 
 public class App {
@@ -14,6 +16,8 @@ public class App {
 
         ClienteService clienteService = new ClienteService();
         FuncionarioService funcionarioService = new FuncionarioService();
+        FilmeService filmeService = new FilmeService();
+        AssinaturaService assinaturaService = new AssinaturaService();
 
         System.out.println("Bem-vindo ao sistema!");
 
@@ -39,7 +43,7 @@ public class App {
 
                     if (clienteAutenticado != null) {
                         System.out.println("Cliente autenticado com sucesso: ");// + clienteAutenticado
-                        exibirMenuCliente(scanner, clienteService, clienteAutenticado);
+                        exibirMenuCliente(scanner, clienteService, assinaturaService, clienteAutenticado);
                     } else {
                         System.out.println("Falha na autenticação do cliente.");
                     }
@@ -72,43 +76,46 @@ public class App {
         }
     }
 
-    private static void exibirMenuCliente(Scanner scanner, ClienteService clienteService, Cliente clienteAutenticado) {
+    private static void exibirMenuCliente(Scanner scanner, ClienteService clienteService,
+            AssinaturaService assinaturaService, Cliente clienteAutenticado) {
         int opcaoCliente;
-    
+
         do {
             System.out.println("Menu do Cliente:");
             System.out.println("1. Exibir Dados");
             System.out.println("2. Alterar Dados");
             System.out.println("3. Ver Filmes");
-            System.out.println("4. Sair");
-    
+            System.out.println("4. Assinar Pacote");
+            System.out.println("5. Sair");
+
             opcaoCliente = obterEscolhaValida(scanner);
-    
+
             switch (opcaoCliente) {
                 case 1:
                     // Exibir dados do cliente autenticado
                     exibirDadosCliente(clienteAutenticado);
                     break;
-    
                 case 2:
-                clienteService.atualizarCliente();
+                    clienteService.atualizarCliente();
                     break;
-    
                 case 3:
                     System.out.println("Executando a Opção 3 para o Cliente.");
+                    // filmeService.cadastrarFilme();
                     break;
-    
                 case 4:
+                    // Assinar Pacote
+                    assinaturaService.cadastrarAssinatura(clienteAutenticado);
+                    break;
+                case 5:
                     System.out.println("Saindo do menu do Cliente.");
                     break;
-    
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
-    
-        } while (opcaoCliente != 4);
+
+        } while (opcaoCliente != 5);
     }
-    
+
     private static void exibirDadosCliente(Cliente cliente) {
         System.out.println("Dados do Cliente:");
         System.out.println("Nome: " + cliente.getName());
@@ -117,6 +124,5 @@ public class App {
         System.out.println("Email: " + cliente.getEmail());
         System.out.println("Telefone: " + cliente.getPhone());
         System.out.println("Username: " + cliente.getUsername());
-        System.out.println("Pacote: " + cliente.getPacote());
     }
 }
