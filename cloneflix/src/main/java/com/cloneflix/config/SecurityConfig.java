@@ -11,21 +11,10 @@ public class SecurityConfig {
         this.clienteService = clienteService;
     }
 
-    public boolean autenticar(String username, String password) {
-        Cliente clienteAutenticado = clienteService.autenticarCliente(username, password);
+    public boolean autenticar(String cpf, String password) {
+        Cliente clienteAutenticado = clienteService.autenticarCliente(cpf, password);
         return clienteAutenticado != null;
     }
+    
 
-    public static void main(String[] args) {
-        ClienteService clienteService = new ClienteService();
-        SecurityConfig securityConfig = new SecurityConfig(clienteService);
-
-        boolean autenticado = securityConfig.autenticar("user1", "senha1");
-
-        if (autenticado) {
-            System.out.println("Usuário autenticado com sucesso!");
-        } else {
-            System.out.println("Falha na autenticação");
-        }
-    }
 }

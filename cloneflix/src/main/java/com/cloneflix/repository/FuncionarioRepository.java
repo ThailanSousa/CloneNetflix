@@ -1,12 +1,16 @@
 package com.cloneflix.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import com.cloneflix.model.entities.Filme;
 import com.cloneflix.model.entities.Funcionario;
 
 public class FuncionarioRepository {
@@ -16,7 +20,7 @@ public class FuncionarioRepository {
     public FuncionarioRepository() {
         this.emf = Persistence.createEntityManagerFactory("cloneflix");
     }
-    //metodo de cadastro funcionario baseado no cliente !!!
+
     public boolean cadastrarFuncionario(Funcionario funcionario) {
         try {
             EntityManager em = emf.createEntityManager();
@@ -30,10 +34,8 @@ public class FuncionarioRepository {
             return false;
         }
     }
-    
-    
-    //metodo de consutar funcionario baseado no cliente !!!
-    public Funcionario consultarFuncioanrioPorCpf(String cpf) {
+
+    public Funcionario consultarFuncionarioPorCpf(String cpf) {
         EntityManager em = emf.createEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -42,15 +44,14 @@ public class FuncionarioRepository {
             cq.select(root).where(cb.equal(root.get("cpf"), cpf));
             return em.createQuery(cq).getSingleResult();
         } catch (Exception e) {
-            System.out.println("Funcionario não encontrado.");
+            System.out.println("Funcionário não encontrado.");
             return null;
         } finally {
             em.close();
         }
     }
-    
-    //metodo de atualizar funcionario baseado no cliente !!!
-    public boolean atualizarFuncioanrio(Funcionario funcionario) {
+
+    public boolean atualizarFuncionario(Funcionario funcionario) {
         try {
             EntityManager em = emf.createEntityManager();
             em.getTransaction().begin();
@@ -59,12 +60,11 @@ public class FuncionarioRepository {
             em.close();
             return true;
         } catch (Exception e) {
-            System.out.println("Erro ao atualizar o funcionario.");
+            System.out.println("Erro ao atualizar o funcionário.");
             return false;
         }
     }
 
-    //metodo de deletar funcionario baseado no cliente !!!
     public boolean deletarFuncionario(String cpf) {
         try {
             EntityManager em = emf.createEntityManager();
@@ -80,19 +80,32 @@ public class FuncionarioRepository {
         }
     }
 
-    //metodo de autenticar funcionario cod by ChatGPT (ass.Thailan)
-    public Funcionario autenticarFuncionario(String username, String password) {
+    public Funcionario autenticarFuncionario(String cpf, String password) {
         try {
             EntityManager em = emf.createEntityManager();
             return em
-                    .createQuery("SELECT f FROM Funcionario f WHERE f.username = :username AND f.password = :password",
-                            Funcionario.class)
-                    .setParameter("username", username)
+                    .createQuery("SELECT f FROM Funcionario f WHERE f.cpf = :cpf AND f.password = :password", Funcionario.class)
+                    .setParameter("cpf", cpf)
                     .setParameter("password", password)
                     .getSingleResult();
-        } catch (Exception e) {
-            System.out.println("Falha na autenticação do funcionário");
+        } catch (NoResultException e) {
+            System.out.println("|----------------------------------------------------------|");
+            System.out.println("|   CPF ou senha incorretos, por favor, tente novamente    |");
+            System.out.println("|----------------------------------------------------------|");
             return null;
+        }
+    }
+    public List<Filme> listarTodosFilmes() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Filme> cq = cb.createQuery(Filme.class);
+            Root<Filme> root = cq.from(Filme.class);
+            cq.select(root);
+
+            return em.createQuery(cq).getResultList();
+        } finally {
+            em.close();
         }
     }
 }

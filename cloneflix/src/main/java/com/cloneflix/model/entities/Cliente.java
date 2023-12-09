@@ -1,40 +1,38 @@
 package com.cloneflix.model.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "cliente")
 public class Cliente {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String username;
     private String password;
     private String name;
     private int age;
+    @Id
+    @Column(name = "cpf", length = 11,unique = true)
     private String cpf;
+    @Column(unique = true)
     private String email;
+    @Column(unique = true)
     private String phone;
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<Assinatura> assinaturas = new ArrayList<>();
 
 
     // Construtor vazio p/ JPA
     public Cliente() {
     }
 
-    public Cliente(String username, String password, String name, int age, String cpf, String email,
-            String phone) {
+    public Cliente(Long id, String username, String password, String name, int age, String cpf, String email,String phone) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.name = name;
@@ -106,18 +104,6 @@ public class Cliente {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-    
-    @Override
-    public String toString() {
-        return "Cliente [id=" + id + ", username=" + username + ", name=" + name + ", age=" + age + ", cpf=" + cpf +
-                ", email=" + email + ", phone=" + phone + "]";
-
-    }
-
-    public void adicionarAssinatura(Assinatura assinatura) {
-        assinaturas.add(assinatura);
-        assinatura.setCliente(this);
     }
 
 }

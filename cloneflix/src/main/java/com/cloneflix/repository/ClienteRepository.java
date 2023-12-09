@@ -2,6 +2,7 @@ package com.cloneflix.repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -65,29 +66,46 @@ public class ClienteRepository {
         try {
             EntityManager em = emf.createEntityManager();
             em.getTransaction().begin();
+            
             Cliente cliente = em.find(Cliente.class, cpf);
-            em.remove(cliente);
-            em.getTransaction().commit();
-            em.close();
-            return true;
+            
+            if (cliente != null) {
+                em.remove(cliente);
+                em.getTransaction().commit();
+                em.close();
+                return true;
+            } else {
+                System.out.println("Cliente não encontrado.");
+                em.close();
+                return false;
+            }
         } catch (Exception e) {
-            System.out.println("Erro ao deletar o cliente.");
+            System.out.println("Erro ao deletar o cliente: " + e.getMessage());
             return false;
         }
     }
+    
 
-    public Cliente autenticarCliente(String username, String password) {
+    public Cliente autenticarCliente(String cpf, String password) {
         try {
             EntityManager em = emf.createEntityManager();
             return em
-                    .createQuery("SELECT c FROM Cliente c WHERE c.username = :username AND c.password = :password",
-                            Cliente.class)
-                    .setParameter("username", username)
+                    .createQuery("SELECT c FROM Cliente c WHERE c.cpf = :cpf AND c.password = :password", Cliente.class)
+                    .setParameter("cpf", cpf)
                     .setParameter("password", password)
                     .getSingleResult();
-        } catch (Exception e) {
-            System.out.println("Falha na autenticação do cliente");
+        } catch (NoResultException e) {
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
+            System.out.println("|----------------------------------------------------------|");
+            System.out.println("|   CPF ou senha incorretos, por favor, tente novamente    |");
+            System.out.println("|----------------------------------------------------------|");
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
             return null;
         }
     }
+
 }

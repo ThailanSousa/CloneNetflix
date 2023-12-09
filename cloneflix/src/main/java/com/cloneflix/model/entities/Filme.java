@@ -1,5 +1,6 @@
 package com.cloneflix.model.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,7 @@ public class Filme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idFilme;
-
+    @Column(unique = true)
     private String titulo;
     private String diretor;
     private int duracaoMinutos;
@@ -21,11 +22,13 @@ public class Filme {
     private String genero;
     private String sinopse;
     private int disponivelParaAssistir;
+    @Column(unique = true)
+    private String link; // Novo atributo para o link
 
     public Filme() {
     }
 
-    public Filme(String titulo, String diretor, int duracaoMinutos, int anoLancamento, String genero, String sinopse, int disponivelParaAssistir) {
+    public Filme(String titulo, String diretor, int duracaoMinutos, int anoLancamento, String genero, String sinopse, int disponivelParaAssistir, String link) {
         this.titulo = titulo;
         this.diretor = diretor;
         this.duracaoMinutos = duracaoMinutos;
@@ -33,9 +36,10 @@ public class Filme {
         this.genero = genero;
         this.sinopse = sinopse;
         this.disponivelParaAssistir = disponivelParaAssistir;
+        this.link = link;
     }
 
-   
+    
 
     public long getIdFilme() {
         return idFilme;
@@ -101,6 +105,14 @@ public class Filme {
         this.disponivelParaAssistir = disponivelParaAssistir;
     }
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     @Override
     public String toString() {
         return "Filme{" +
@@ -112,6 +124,11 @@ public class Filme {
                 ", genero='" + genero + '\'' +
                 ", sinopse='" + sinopse + '\'' +
                 ", disponivelParaAssistir=" + disponivelParaAssistir +
+                ", link='" + link + '\'' +
                 '}';
+    }
+
+    public String getAno() {
+        return null;
     }
 }

@@ -1,6 +1,9 @@
 package com.cloneflix.model.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,22 +16,31 @@ public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(unique = true)
     private String username;
     private String password;
     private String name;
     private int age;
+    @Column(unique = true)
     private String cpf;
+    @Column(unique = true)
     private String email;
+    @Column(unique = true)
     private String phone;
 
-    private boolean administrador;
+    public enum Cargo {
+        JUNIOR, AUX_PRODUCAO, ADM
+    }
 
+    @Enumerated(EnumType.STRING)
+    private Cargo cargo;
+
+    // Construtor vazio para JPA
     public Funcionario() {
     }
 
     public Funcionario(String username, String password, String name, int age, String cpf, String email, String phone,
-            boolean administrador) {
+            Cargo cargo) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -36,7 +48,7 @@ public class Funcionario {
         this.cpf = cpf;
         this.email = email;
         this.phone = phone;
-        this.administrador = administrador;
+        this.cargo = cargo;
     }
 
     
@@ -105,17 +117,17 @@ public class Funcionario {
         this.phone = phone;
     }
 
-    public boolean isAdministrador() {
-        return administrador;
+    public Cargo getCargo() {
+        return cargo;
     }
 
-    public void setAdministrador(boolean administrador) {
-        this.administrador = administrador;
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
     }
 
     @Override
     public String toString() {
-        return "Funcionario [id=" + id + ", username=" + username + ", name=" + name + ", age=" + age + ", cpf=" + cpf +
-                ", email=" + email + ", phone=" + phone + ", administrador=" + administrador + "]";
+        return "Funcionario [id=" + id + ", username=" + username + ", name=" + name + ", age=" + age + ", cpf=" + cpf
+                + ", email=" + email + ", phone=" + phone + ", cargo=" + cargo + "]";
     }
 }

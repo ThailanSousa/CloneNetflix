@@ -11,22 +11,13 @@ public class AutenticacaoController {
         this.clienteService = clienteService;
     }
 
-    public String autenticar(String username, String password) {
-        Cliente clienteAutenticado = clienteService.autenticarCliente(username, password);
+    public String autenticar(String cpf, String password) {
+        Cliente clienteAutenticado = clienteService.autenticarCliente(cpf, password);
 
         if (clienteAutenticado != null) {
             return "Login bem-sucedido!";
         } else {
             return "Falha na autenticação";
         }
-    }
-
-    public static void main(String[] args) {
-        ClienteService clienteService = new ClienteService();
-        AutenticacaoController autenticacaoController = new AutenticacaoController(clienteService);
-
-        String resultado = autenticacaoController.autenticar("user1", "senha1");
-
-        System.out.println(resultado);
     }
 }
